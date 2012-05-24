@@ -5,8 +5,4 @@ public class EnvironmentVariableUtil {
 		return System.getenv(varName);
 	}
 	
-	public static void main(String[] args){
-//		System.out.println(System.getEnv("JAVA_HOME"));
-//		System.out.println(System.getenv("JAVA_HOME"));
-	}
 }

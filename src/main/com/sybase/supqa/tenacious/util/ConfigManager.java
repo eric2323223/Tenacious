@@ -8,12 +8,11 @@ import java.util.Properties;
 
 public class ConfigManager {
 	
-	public static final String CONFIG_FILE = "";
 	private Properties properties = new Properties();
 	
-	public ConfigManager(){
+	public ConfigManager(String config_file){
 		try {
-			properties.load(new FileReader(new File(CONFIG_FILE)));
+			properties.load(new FileReader(new File(config_file)));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

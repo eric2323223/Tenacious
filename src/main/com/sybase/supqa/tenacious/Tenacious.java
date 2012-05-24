@@ -1,21 +1,34 @@
 package com.sybase.supqa.tenacious;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sybase.supqa.tenacious.policy.PolicyFactory;
 import com.sybase.supqa.tenacious.util.Cmd;
+import com.sybase.supqa.tenacious.util.ConfigManager;
 
 public class Tenacious {
+	private final static String PWD;
+	static{
+		PWD = new File(".").getAbsolutePath();
+	}
+	
+	public static final String TENACIOUS_PROPERTIES=PWD+File.pathSeparator+"tenacious.properties";
+	public static final String TENACIOUS_POLICY_PROPERTIES=PWD+File.pathSeparator+"policy.properties";
+	public static final String TENACIOUS_TESTCASES_LOG = PWD+File.pathSeparator+"TestResult"+File.pathSeparator+"testcases.txt";
 	
 	public static void main(String[] args){
-		List<String> tests = loadTestsFromFile("");
+		
+		List<String> tests = loadTestsFromFile(TENACIOUS_TESTCASES_LOG);
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
-			runner.runTestSuite(tests);
-			List<String> failedTests = loadTestsFromFile("");
+			ConfigManager config = new ConfigManager(TENACIOUS_POLICY_PROPERTIES);
+			runner.runTestSuite(tests, PolicyFactory.getPolicy(config));
+			List<String> failedTests = loadTestsFromFile(TENACIOUS_TESTCASES_LOG);
 			if(tests.size()==failedTests.size()){
 				return;
 			}else{
