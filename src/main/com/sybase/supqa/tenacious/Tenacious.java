@@ -14,7 +14,7 @@ public class Tenacious {
 		List<String> tests = loadTestsFromFile("");
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
-			runner.run();
+			runner.runTestSuite(tests);
 			List<String> failedTests = loadTestsFromFile("");
 			if(tests.size()==failedTests.size()){
 				return;
@@ -25,7 +25,7 @@ public class Tenacious {
 	}
 
 	private static void restartMachine() {
-		Cmd.execute("cmd /c shutdown -f -r -t 30");
+		Cmd.execute("cmd /c shutdown -f -r -t 0");
 	}
 
 	private static List<String> loadTestsFromFile(String string) {
