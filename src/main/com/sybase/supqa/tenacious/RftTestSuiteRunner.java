@@ -11,7 +11,7 @@ public class RftTestSuiteRunner {
 		return null;
 	}
 	
-	public void runTestSuite(List<String> tests){
+	public List<String> runTestSuite(List<String> tests){
 		this.allTests = tests;
 		for(String test:allTests){
 			RftTestRunner runner = new RftTestRunner();
@@ -20,6 +20,7 @@ public class RftTestSuiteRunner {
 				failedTests.add(test);
 			}
 		}
+		return failedTests;
 	}
 	
 	public int totalTestCount(){
