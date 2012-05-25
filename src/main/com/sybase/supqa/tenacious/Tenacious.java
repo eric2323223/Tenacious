@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,9 @@ public class Tenacious {
 	public static final String TENACIOUS_TEST_QUEUE = PWD+File.separator+"TestResults"+File.separator+"TestQueue.txt";
 	
 	public static void main(String[] args){
+		if(ifTenaciousInstalled()){
+			install();
+		}
 		List<RftTestScript> tests = loadTestQueue();
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
@@ -79,6 +81,54 @@ public class Tenacious {
 		}
 	}
 	
+	private static boolean ifTenaciousInstalled(){
+		File configFile = getTenaciousBatchFile();
+		if(configFile.exists()){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	private static File getTenaciousPropertiesFile(){
+		ConfigManager config = new ConfigManager(TENACIOUS_PROPERTIES);
+		String startFolder = config.getProperty("START_FOLDER");
+		return new File(startFolder+File.separator+"tenacious.properties");
+	}
+	
+	private static void install(){
+		File tenaciousBatchFile = getTenaciousBatchFile();
+		FileWriter writer = null;
+		try {
+			writer = new FileWriter(tenaciousBatchFile);
+			writer.write(generateTenaciousStartBatchCode());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
+	private static File getTenaciousBatchFile() {
+		ConfigManager config = new ConfigManager(TENACIOUS_PROPERTIES);
+		String startFolder = config.getProperty("START_FOLDER");
+		return new File(startFolder+File.separator+"tenacious.properties");
+	}
+
+	private static String generateTenaciousStartBatchCode() {
+		String javaPath = getJavaPath();
+		String classPath = "-cp ";
+		String mainClass = "com.sybase.supqa.tenacious.Tenacious";
+		return javaPath+ " "+ classPath+ " "+mainClass;
+	}
+
+	private static String getJavaPath() {
+		String path = System.getProperty("");
+		return "\""+path+File.separator+"java.exe\"";
+	}
 
 }
