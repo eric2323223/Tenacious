@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,9 @@ import com.sybase.supqa.tenacious.util.ConfigManager;
 public class Tenacious {
 	private final static String PWD;
 	static{
-		String path = new File(".").getAbsolutePath();
-		PWD = path.substring(0, path.length()-2);
+		String binaryPath = Tenacious.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("%20", " ");
+		System.out.println(binaryPath);
+		PWD = binaryPath.substring(0, binaryPath.indexOf("Tenacious")+ "Tenacious".length());
 	}
 	
 	public static final String TENACIOUS_PROPERTIES=PWD+File.separator+"tenacious.properties";

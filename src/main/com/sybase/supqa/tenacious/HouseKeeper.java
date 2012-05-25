@@ -1,5 +1,7 @@
 package com.sybase.supqa.tenacious;
 
+import com.sybase.supqa.tenacious.util.Cmd;
+
 public class HouseKeeper {
 
 	public static void basicCleanUp() {
@@ -11,7 +13,9 @@ public class HouseKeeper {
 	}
 
 	public static void ultimateClenUp() {
+		Cmd.execute("cmd /c shutdown -f -r -t 3");
 		System.out.println("restarting machine....");
+		System.exit(0);
 	}
 
 }
