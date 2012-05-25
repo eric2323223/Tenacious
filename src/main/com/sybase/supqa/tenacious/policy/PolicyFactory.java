@@ -6,13 +6,19 @@ public class PolicyFactory {
 	
 	public static IExecutionPolicy getPolicy(ConfigManager config){
 		if(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterTimePeriod))!=null){
-			return new TimePeriodPolicy();
+			TimePeriodPolicy policy = new TimePeriodPolicy();
+			policy.setThreshold(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterTimePeriod)));
+			return policy;
 		}
 		if(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterFinishTestNumber))!=null){
-			return new FinishTestNumberPolicy();
+			FinishTestNumberPolicy policy = new FinishTestNumberPolicy();
+			policy.setThreshold(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterFinishTestNumber)));
+			return policy;
 		}
 		if(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterResourceUsageReach))!=null){
-			return new ResourceUsagePolicy();
+			ResourceUsagePolicy policy = new ResourceUsagePolicy();
+			policy.setThreshold(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterResourceUsageReach)));
+			return policy;
 		}
 		else{
 			return new DefaultPolicy();

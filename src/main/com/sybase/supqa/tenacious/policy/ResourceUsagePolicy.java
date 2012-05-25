@@ -1,29 +1,14 @@
 package com.sybase.supqa.tenacious.policy;
 
-public class ResourceUsagePolicy implements IExecutionPolicy {
+import com.sybase.supqa.tenacious.CleanUpStatus;
+import com.sybase.supqa.tenacious.RftTestSuiteRunner;
+
+public class ResourceUsagePolicy extends DefaultPolicy{
 
 	@Override
-	public void beforeRunTest() {
-		// TODO Auto-generated method stub
-
+	public CleanUpStatus getCleanUpStatus(RftTestSuiteRunner runner) {
+		return super.getCleanUpStatus(runner);
 	}
 
-	@Override
-	public void afterRunTest() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void basicCleanUp() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void ultimateCleanUp() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

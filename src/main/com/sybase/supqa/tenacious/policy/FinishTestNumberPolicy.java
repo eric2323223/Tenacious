@@ -1,29 +1,17 @@
 package com.sybase.supqa.tenacious.policy;
 
-public class FinishTestNumberPolicy implements IExecutionPolicy {
+import com.sybase.supqa.tenacious.CleanUpStatus;
+import com.sybase.supqa.tenacious.RftTestSuiteRunner;
+
+public class FinishTestNumberPolicy extends DefaultPolicy {
 
 	@Override
-	public void beforeRunTest() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void afterRunTest() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void basicCleanUp() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void ultimateCleanUp() {
-		// TODO Auto-generated method stub
-
+	public CleanUpStatus getCleanUpStatus(RftTestSuiteRunner runner) {
+		int count = new Integer(getThreshold()).intValue();
+		if(runner.getFinishedTestsCount() >= count){
+			return CleanUpStatus.ULTIMATE_CLEANUP;
+		}
+		return super.getCleanUpStatus(runner);
 	}
 
 }

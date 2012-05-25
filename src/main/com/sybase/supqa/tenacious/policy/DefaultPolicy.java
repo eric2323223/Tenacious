@@ -1,29 +1,24 @@
 package com.sybase.supqa.tenacious.policy;
 
+import com.sybase.supqa.tenacious.CleanUpStatus;
+import com.sybase.supqa.tenacious.RftTestSuiteRunner;
+
 public class DefaultPolicy implements IExecutionPolicy {
+	private String threshold;
 
 	@Override
-	public void beforeRunTest() {
-		// TODO Auto-generated method stub
-
+	public CleanUpStatus getCleanUpStatus(RftTestSuiteRunner runner) {
+		return CleanUpStatus.NO_NEED_CLEANUP;
 	}
 
 	@Override
-	public void afterRunTest() {
-		// TODO Auto-generated method stub
-
+	public String getThreshold() {
+		return threshold;
 	}
 
 	@Override
-	public void basicCleanUp() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void ultimateCleanUp() {
-		// TODO Auto-generated method stub
-
+	public void setThreshold(String value) {
+		threshold = value;
 	}
 
 }

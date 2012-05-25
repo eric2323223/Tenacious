@@ -1,29 +1,22 @@
 package com.sybase.supqa.tenacious.policy;
 
-public class TimePeriodPolicy implements IExecutionPolicy {
+import java.util.Date;
+
+import com.sybase.supqa.tenacious.CleanUpStatus;
+import com.sybase.supqa.tenacious.RftTestSuiteRunner;
+
+public class TimePeriodPolicy extends DefaultPolicy {
 
 	@Override
-	public void beforeRunTest() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void afterRunTest() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void basicCleanUp() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void ultimateCleanUp() {
-		// TODO Auto-generated method stub
-
+	public CleanUpStatus getCleanUpStatus(RftTestSuiteRunner runner) {
+		long start = runner.getStartTime();
+		long now = new Date().getTime();
+		long difference = new Integer(getThreshold()).intValue()*1000;
+		if(now-start > difference){
+			return CleanUpStatus.ULTIMATE_CLEANUP;
+		}else{
+			return CleanUpStatus.NO_NEED_CLEANUP;
+		}
 	}
 
 }
