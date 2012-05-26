@@ -37,7 +37,8 @@ public class Tenacious {
 				cleanTestQueue();
 				return;
 			}else{
-				HouseKeeper.ultimateClenUp();
+				ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(""));
+				handler.ultimateCleanup();
 			}
 		}
 	}
