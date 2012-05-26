@@ -5,19 +5,24 @@ import com.sybase.supqa.tenacious.util.ConfigManager;
 public class PolicyFactory {
 	
 	public static IExecutionPolicy getPolicy(ConfigManager config){
-		if(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterTimePeriod))!=null){
+		if(config.getProperty(PolicyType.TIME_PERIOD)!=null){
 			TimePeriodPolicy policy = new TimePeriodPolicy();
-			policy.setThreshold(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterTimePeriod)));
+			policy.addThreshold(PolicyType.TIME_PERIOD, config.getProperty(PolicyType.TIME_PERIOD));
 			return policy;
 		}
-		if(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterFinishTestNumber))!=null){
+		if(config.getProperty(PolicyType.FINISHED_TEST_NUMBER)!=null){
 			FinishTestNumberPolicy policy = new FinishTestNumberPolicy();
-			policy.setThreshold(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterFinishTestNumber)));
+			policy.addThreshold(PolicyType.FINISHED_TEST_NUMBER, config.getProperty(PolicyType.FINISHED_TEST_NUMBER));
 			return policy;
 		}
-		if(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterResourceUsageReach))!=null){
+		if(config.getProperty(PolicyType.RESOURCE_USAGE)!=null){
 			ResourceUsagePolicy policy = new ResourceUsagePolicy();
-			policy.setThreshold(config.getProperty(PolicyType.getName(PolicyType.cleanUpAfterResourceUsageReach)));
+			String value = config.getProperty(PolicyType.RESOURCE_USAGE);
+			for(String keyValue:value.split(",")){
+				String k = keyValue.split(":")[0];
+				String v = keyValue.split(":")[1];
+				policy.addThreshold(k, v);
+			}
 			return policy;
 		}
 		else{

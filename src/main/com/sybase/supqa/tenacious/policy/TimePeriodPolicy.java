@@ -11,7 +11,7 @@ public class TimePeriodPolicy extends DefaultPolicy {
 	public CleanUpStatus getCleanUpStatus(RftTestSuiteRunner runner) {
 		long start = runner.getStartTime();
 		long now = new Date().getTime();
-		long difference = new Integer(getThreshold()).intValue()*1000;
+		long difference = new Integer(getThreshold().get(PolicyType.TIME_PERIOD)).intValue()*1000;
 		if(now-start > difference){
 			return CleanUpStatus.ULTIMATE_CLEANUP;
 		}else{

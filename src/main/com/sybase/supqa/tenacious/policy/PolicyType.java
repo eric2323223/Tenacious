@@ -1,19 +1,8 @@
 package com.sybase.supqa.tenacious.policy;
 
 
-public enum PolicyType {
-	cleanUpAfterTimePeriod, cleanUpAfterFinishTestNumber, cleanUpAfterResourceUsageReach;
-	
-	public static String getName(PolicyType type){
-		if(type==cleanUpAfterTimePeriod){
-			return "cleanUpAfterTimePeriod";
-		}
-		if(type==cleanUpAfterFinishTestNumber){
-			return "cleanUpAfterFinishTestNumber";
-		}
-		if(type==cleanUpAfterResourceUsageReach){
-			return "cleanUpAfterResourceUsageReach";
-		}
-		throw new RuntimeException();
-	}
+public class PolicyType {
+	public static final String TIME_PERIOD = "cleanUpAfterTimePeriod";
+	public static final String FINISHED_TEST_NUMBER = "cleanUpAfterFinishTestNumber";
+	public static final String RESOURCE_USAGE = "cleanUpAfterResourceUsageReach";
 }
