@@ -1,5 +1,8 @@
 package com.sybase.supqa.tenacious.policy;
 
+import java.util.List;
+
+import com.sybase.supqa.tenacious.PolicyConfig;
 import com.sybase.supqa.tenacious.util.ConfigManager;
 
 public class PolicyFactory {
@@ -27,6 +30,21 @@ public class PolicyFactory {
 		}
 		else{
 			return new DefaultPolicy();
+		}
+	}
+	
+	public static IExecutionPolicy getPolicy(PolicyConfig config){
+		String className = config.getPolicyClassName();
+		try {
+			IExecutionPolicy policy = (IExecutionPolicy)Class.forName(className).newInstance();
+			List<String> parameters = config.getParameters();
+			for(String parameter:parameters){
+				policy.addThreshold(parameter, config.getParameterValue(parameter));
+			}
+			return policy;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Failed to create IExecutionPolicy instance");
 		}
 	}
 

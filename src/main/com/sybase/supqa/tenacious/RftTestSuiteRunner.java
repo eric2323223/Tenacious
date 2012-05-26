@@ -22,14 +22,15 @@ public class RftTestSuiteRunner {
 			if(!currentTestResult.isPass()){
 				failedTests.add(test);
 			}
+			ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(""));
 			if(policy.getCleanUpStatus(this)==CleanUpStatus.BASIC_CLEANUP){
-				HouseKeeper.basicCleanUp();
+				handler.basicCleanup();
 			}
 			if(policy.getCleanUpStatus(this)==CleanUpStatus.ADVANCED_CLEANUP){
-				HouseKeeper.advancedClenUp();
+				handler.advancedCleanup();
 			}
 			if(policy.getCleanUpStatus(this)==CleanUpStatus.ULTIMATE_CLEANUP){
-				HouseKeeper.ultimateClenUp();
+				handler.ultimateCleanup();
 			}
 		}
 		return failedTests;
