@@ -2,5 +2,5 @@
 <policy class="com.sybase.supqa.tenacious.policy.ResourceUsagePolicy">
 	<parameter name="cpuIdle" value="0.3" />
 	<parameter name="memoryFree" value="300M" />
-	<cleanupHandler class="com.sybase.supqa.tenacious.HouseKeeper">
+	<cleanupHandler class="com.sybase.supqa.tenacious.HouseKeeper" />
 </policy>

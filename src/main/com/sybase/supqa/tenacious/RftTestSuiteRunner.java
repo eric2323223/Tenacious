@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
+import com.sybase.supqa.tenacious.policy.PolicyConfig;
 
 public class RftTestSuiteRunner {
 	private List<RftTestScript> finishedTests = new ArrayList<RftTestScript>();

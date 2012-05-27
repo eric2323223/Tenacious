@@ -1,5 +1,7 @@
 package com.sybase.supqa.tenacious;
 
+import com.sybase.supqa.tenacious.policy.PolicyConfig;
+
 public class CleanupHandlerFactory {
 	
 	public static ICleanupHandler getHandler(PolicyConfig config){

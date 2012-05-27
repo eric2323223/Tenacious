@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
 import com.sybase.supqa.tenacious.util.ConfigManager;
 
@@ -20,8 +21,9 @@ public class Tenacious {
 	}
 	
 	public static final String TENACIOUS_PROPERTIES=PWD+File.separator+"tenacious.properties";
-	public static final String TENACIOUS_POLICY_PROPERTIES=PWD+File.separator+"policy.properties";
+	public static final String TENACIOUS_POLICY_CONFIG=PWD+File.separator+"policy.xml";
 	public static final String TENACIOUS_TEST_QUEUE = PWD+File.separator+"TestResults"+File.separator+"TestQueue.txt";
+	
 	
 	public static void main(String[] args){
 		if(ifTenaciousInstalled()){
@@ -30,7 +32,7 @@ public class Tenacious {
 		List<RftTestScript> tests = loadTestQueue();
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
-			ConfigManager config = new ConfigManager(TENACIOUS_POLICY_PROPERTIES);
+			ConfigManager config = new ConfigManager(TENACIOUS_POLICY_CONFIG);
 			runner.runTestSuite(tests, PolicyFactory.getPolicy(config));
 			List<RftTestScript> failedTests = loadTestQueue();
 			if(tests.size()==failedTests.size()){

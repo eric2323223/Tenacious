@@ -2,7 +2,6 @@ package com.sybase.supqa.tenacious.policy;
 
 import java.util.List;
 
-import com.sybase.supqa.tenacious.PolicyConfig;
 import com.sybase.supqa.tenacious.util.ConfigManager;
 
 public class PolicyFactory {
