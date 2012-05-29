@@ -6,12 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sybase.supqa.tenacious.Tenacious;
+import com.sybase.supqa.tenacious.TenaciousConfig;
 
 public class PolicyFactoryTest {
+	private TenaciousConfig cfg;
 	private PolicyConfig config;
 	
 	@Before public void setup(){
-		config = new PolicyConfig(Tenacious.TENACIOUS_POLICY_CONFIG);
+		cfg = new TenaciousConfig();
+		config = new PolicyConfig(cfg.getTenaciousPolicyConfigFile());
 	}
 
 	@Test
