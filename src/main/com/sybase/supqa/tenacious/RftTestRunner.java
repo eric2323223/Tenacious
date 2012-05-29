@@ -6,6 +6,7 @@ public class RftTestRunner {
 //		String commandLine = "cmd /c start/wait ";
 //		Cmd.execute(commandLine);
 		System.out.println("run test "+test.getName());
+		test.run();
 		return test.getResult();
 	}
 

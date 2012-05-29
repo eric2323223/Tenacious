@@ -2,11 +2,11 @@ package com.sybase.supqa.tenacious.policy;
 
 import java.util.List;
 
-import com.sybase.supqa.tenacious.util.ConfigManager;
+import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
 
 public class PolicyFactory {
 	
-	public static IExecutionPolicy getPolicy(ConfigManager config){
+	public static IExecutionPolicy getPolicy(PropertiesFileHelper config){
 		if(config.getProperty(PolicyType.TIME_PERIOD)!=null){
 			TimePeriodPolicy policy = new TimePeriodPolicy();
 			policy.addThreshold(PolicyType.TIME_PERIOD, config.getProperty(PolicyType.TIME_PERIOD));

@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
-import com.sybase.supqa.tenacious.util.ConfigManager;
+import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
 
 public class Tenacious {
 	private TenaciousConfig tenaciousConfig;
@@ -30,7 +30,7 @@ public class Tenacious {
 	void runTests(List<RftTestScript> tests) {
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
-			ConfigManager config = new ConfigManager(tenaciousConfig.getTenaciousPolicyConfigFile());
+			PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPolicyConfigFile());
 			runner.runTestSuite(tests, PolicyFactory.getPolicy(config));
 			List<RftTestScript> failedTests = loadTestQueue();
 			if(tests.size()==failedTests.size()){
@@ -92,7 +92,7 @@ public class Tenacious {
 	}
 	
 	private File getTenaciousPropertiesFile(){
-		ConfigManager config = new ConfigManager(tenaciousConfig.getTenaciousPropertiesFile());
+		PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPropertiesFile());
 		String startFolder = config.getProperty("START_FOLDER");
 		return new File(startFolder+File.separator+"tenacious.properties");
 	}
@@ -115,7 +115,7 @@ public class Tenacious {
 	}
 
 	private File getTenaciousBatchFile() {
-		ConfigManager config = new ConfigManager(tenaciousConfig.getTenaciousPropertiesFile());
+		PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPropertiesFile());
 		String startFolder = config.getProperty("START_FOLDER");
 		return new File(startFolder+File.separator+"tenacious.properties");
 	}

@@ -2,6 +2,8 @@ package com.sybase.supqa.tenacious;
 
 import java.io.File;
 
+import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
+
 public class TenaciousConfig {
 	
 	private String pwd;
@@ -27,6 +29,11 @@ public class TenaciousConfig {
 	
 	public String getTenaciousTestQueueFile() {
 		return getTenaciousRootPath()+File.separator+"TestResults"+File.separator+"TestQueue.txt";
+	}
+	
+	public String getSuptafRootPath(){
+		PropertiesFileHelper helper = new PropertiesFileHelper(getTenaciousPropertiesFile());
+		return helper.getProperty("SUPTAF_ROOT_PATH");
 	}
 	
 	public static void main(String[] args){
