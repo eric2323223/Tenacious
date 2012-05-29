@@ -13,40 +13,38 @@ import com.sybase.supqa.tenacious.policy.PolicyFactory;
 import com.sybase.supqa.tenacious.util.ConfigManager;
 
 public class Tenacious {
-	private final static String PWD;
-	static{
-		String binaryPath = Tenacious.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("%20", " ");
-		System.out.println(binaryPath);
-		PWD = binaryPath.substring(0, binaryPath.indexOf("Tenacious")+ "Tenacious".length());
+	private TenaciousConfig tenaciousConfig;
+	
+	public Tenacious(TenaciousConfig c){
+		this.tenaciousConfig = c;
 	}
-	
-	public static final String TENACIOUS_PROPERTIES=PWD+File.separator+"tenacious.properties";
-	public static final String TENACIOUS_POLICY_CONFIG=PWD+File.separator+"policy.xml";
-	public static final String TENACIOUS_TEST_QUEUE = PWD+File.separator+"TestResults"+File.separator+"TestQueue.txt";
-	
-	
+
 	public static void main(String[] args){
-		if(ifTenaciousInstalled()){
-			install();
+		Tenacious tenacious = new Tenacious(new TenaciousConfig());
+		if(tenacious.ifTenaciousInstalled()){
+			tenacious.install();
 		}
-		List<RftTestScript> tests = loadTestQueue();
+		tenacious.runTests(tenacious.loadTestQueue());
+	}
+
+	void runTests(List<RftTestScript> tests) {
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
-			ConfigManager config = new ConfigManager(TENACIOUS_POLICY_CONFIG);
+			ConfigManager config = new ConfigManager(tenaciousConfig.getTenaciousPolicyConfigFile());
 			runner.runTestSuite(tests, PolicyFactory.getPolicy(config));
 			List<RftTestScript> failedTests = loadTestQueue();
 			if(tests.size()==failedTests.size()){
 				cleanTestQueue();
 				return;
 			}else{
-				ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(TENACIOUS_POLICY_CONFIG));
+				ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(tenaciousConfig.getTenaciousPolicyConfigFile()));
 				handler.ultimateCleanup();
 			}
 		}
 	}
 
-	private static void cleanTestQueue() {
-		File file = new File(TENACIOUS_TEST_QUEUE);
+	private void cleanTestQueue() {
+		File file = new File(tenaciousConfig.getTenaciousTestQueueFile());
 		FileWriter writer = null;
 		try {
 			writer = new FileWriter(file);
@@ -62,11 +60,11 @@ public class Tenacious {
 		}
 	}
 
-	private static List<RftTestScript> loadTestQueue() {
+	private List<RftTestScript> loadTestQueue() {
 		List<RftTestScript> tests = new ArrayList<RftTestScript>();
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(TENACIOUS_TEST_QUEUE));
+			reader = new BufferedReader(new FileReader(tenaciousConfig.getTenaciousTestQueueFile()));
 			String line;
 			while((line=reader.readLine())!=null){
 				tests.add(new RftTestScript(line));
@@ -84,7 +82,7 @@ public class Tenacious {
 		}
 	}
 	
-	private static boolean ifTenaciousInstalled(){
+	private boolean ifTenaciousInstalled(){
 		File configFile = getTenaciousBatchFile();
 		if(configFile.exists()){
 			return true;
@@ -93,13 +91,13 @@ public class Tenacious {
 		}
 	}
 	
-	private static File getTenaciousPropertiesFile(){
-		ConfigManager config = new ConfigManager(TENACIOUS_PROPERTIES);
+	private File getTenaciousPropertiesFile(){
+		ConfigManager config = new ConfigManager(tenaciousConfig.getTenaciousPropertiesFile());
 		String startFolder = config.getProperty("START_FOLDER");
 		return new File(startFolder+File.separator+"tenacious.properties");
 	}
 	
-	private static void install(){
+	private void install(){
 		File tenaciousBatchFile = getTenaciousBatchFile();
 		FileWriter writer = null;
 		try {
@@ -116,21 +114,22 @@ public class Tenacious {
 		}
 	}
 
-	private static File getTenaciousBatchFile() {
-		ConfigManager config = new ConfigManager(TENACIOUS_PROPERTIES);
+	private File getTenaciousBatchFile() {
+		ConfigManager config = new ConfigManager(tenaciousConfig.getTenaciousPropertiesFile());
 		String startFolder = config.getProperty("START_FOLDER");
 		return new File(startFolder+File.separator+"tenacious.properties");
 	}
 
-	private static String generateTenaciousStartBatchCode() {
+	String generateTenaciousStartBatchCode() {
 		String javaPath = getJavaPath();
-		String classPath = "-cp ";
+		String classPath = "-cp \""+tenaciousConfig.getTenaciousRootPath()+File.separator+"bin\""+File.pathSeparator+"\""+
+			tenaciousConfig.getTenaciousRootPath()+File.separator+"lib\\*\"";
 		String mainClass = "com.sybase.supqa.tenacious.Tenacious";
-		return javaPath+ " "+ classPath+ " "+mainClass;
+		return javaPath+ " "+ classPath + " "+mainClass;
 	}
 
-	private static String getJavaPath() {
-		String path = System.getProperty("");
+	private String getJavaPath() {
+		String path = System.getProperty("sun.boot.library.path");
 		return "\""+path+File.separator+"java.exe\"";
 	}
 

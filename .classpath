@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/joda-time-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/sigar.jar"/>
 	<classpathentry kind="lib" path="lib/xom-1.2.8.jar"/>
+	<classpathentry kind="lib" path="lib/mockito-core-1.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

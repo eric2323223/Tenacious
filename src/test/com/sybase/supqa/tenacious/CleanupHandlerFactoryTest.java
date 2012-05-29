@@ -9,9 +9,11 @@ import com.sybase.supqa.tenacious.policy.PolicyConfig;
 
 public class CleanupHandlerFactoryTest {
 	private PolicyConfig config;
+	private TenaciousConfig cfg;
 	
 	@Before public void setup(){
-		config = new PolicyConfig(Tenacious.TENACIOUS_POLICY_CONFIG);
+		cfg = new TenaciousConfig();
+		config = new PolicyConfig(cfg.getTenaciousPolicyConfigFile());
 	}
 
 	@Test
