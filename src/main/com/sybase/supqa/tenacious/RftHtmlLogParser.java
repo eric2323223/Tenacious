@@ -74,7 +74,7 @@ public class RftHtmlLogParser {
 		for(int i=0;i<noteElements.size();i++){
 			String text = noteElements.get(i).text();
 			if(text.startsWith("Verification Point")){
-				vp.add(text);
+				vp.add(text.replace("Verification Point ", ""));
 			}
 		}
 		return vp;
@@ -85,7 +85,7 @@ public class RftHtmlLogParser {
 		List<String> vp = getVerificationPoints();
 		for(String str:vp){
 			if(str.endsWith("failed.")){
-				failedvp.add(str);
+				failedvp.add(str.replace("Verification Point ", "").replace(" failed.", ""));
 			}
 		}
 		return failedvp;
@@ -102,7 +102,7 @@ public class RftHtmlLogParser {
 		String str = convertMonth(dateString);
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy hh:mm:ss.SSS a", Locale.US);
 		try {
-			return dateFormat.parse(dateString);
+			return dateFormat.parse(str);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Failed to parse date string");
@@ -112,10 +112,21 @@ public class RftHtmlLogParser {
 	String convertMonth(String dateString) {
 		DecimalFormat format = new DecimalFormat("00");
 		for(int i=0;i<12;i++){
-			
 			dateString = dateString.replace(MONTHS[i], format.format(i+1));
 		}
 		return dateString;
+	}
+
+	public String getException() {
+		for(int i=0;i<failElements.size();i++){
+			Element element = failElements.get(i);
+			Element timeElement = element.nextElementSibling();
+			Element noteElement = timeElement.nextElementSibling();
+			if(!noteElement.text().startsWith("Verification Point")){
+				return noteElement.text();
+			}
+		}
+		return null;
 	}
 
 

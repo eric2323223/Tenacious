@@ -1,20 +1,34 @@
 package com.sybase.supqa.tenacious;
 
 import java.io.File;
+import java.util.List;
+
+import org.joda.time.Period;
 
 public class RftTestResult {
-	private final File rftLogFile;
-
-	public RftTestResult(File file) {
+	private final String rftLogFile;
+	private final Period executePeriod;
+	private final List<String> failedVerificationPoints;
+	private final String exception;
+	
+	public RftTestResult(String file) {
 		this.rftLogFile = file;
+		RftHtmlLogParser parser = new RftHtmlLogParser(file);
+		executePeriod = parser.getExecutionPeriod();
+		failedVerificationPoints = parser.getFailedVerificationPoints();
+		exception = parser.getException();
 	}
 	
-	public File getRftLogFile(){
-		return this.rftLogFile;
-	}
-
 	public boolean isPass() {
-		return true;
+		return exception==null && failedVerificationPoints.size()==0;
+	}
+	
+	public List<String> getFailedVerificationPoints(){
+		return failedVerificationPoints;
+	}
+	
+	public Period getExecutePeriod(){
+		return this.executePeriod;
 	}
 
 }

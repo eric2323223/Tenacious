@@ -11,7 +11,10 @@ import com.sybase.supqa.tenacious.util.EnvironementVariableUtilTest;
 @SuiteClasses({PolicyConfigTest.class, 
 	PolicyFactoryTest.class, 
 	EnvironementVariableUtilTest.class,
-	CleanupHandlerFactoryTest.class})
+	CleanupHandlerFactoryTest.class,
+	RftHtmlLogParserTest.class,
+	RftTestResultTest.class
+	})
 public class AllTests {
 
 }

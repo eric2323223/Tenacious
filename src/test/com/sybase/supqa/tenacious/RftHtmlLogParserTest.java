@@ -2,6 +2,7 @@ package com.sybase.supqa.tenacious;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,16 +24,16 @@ public class RftHtmlLogParserTest {
 
 	@Test public void shouldGetStartTime(){
 		String date = parser.getStartTimeString();
-		assertEquals("25-May-2012 06:04:00.687 PM", date);
+		assertEquals("16-Mar-2012 03:05:45.724 PM", date);
 	}
 	
 	@Test public void shouldGetEndTime(){
 		String date = parser.getEndTimeString();
-		assertEquals("25-May-2012 07:25:25.421 PM", date);
+		assertEquals("16-Mar-2012 03:07:08.380 PM", date);
 	}
 	
 	@Test public void shouldGetNotes(){
-		assertEquals(10, parser.getAllNotes().size());
+		assertEquals(7, parser.getAllNotes().size());
 	}
 	
 	@Test public void shouldGetVerificationPoints(){
@@ -41,27 +42,29 @@ public class RftHtmlLogParserTest {
 	}
 	
 	@Test public void shouldGetFailures(){
-		assertEquals(5, parser.getAllFailures().size());
+		assertEquals(2, parser.getAllFailures().size());
 	}
 	
 	@Test public void shouldGetFailedVps(){
 		assertEquals(1, parser.getFailedVerificationPoints().size());
-		assertEquals("[errorScreen] passed.", parser.getFailedVerificationPoints().get(0));
+		assertEquals("[noError]", parser.getFailedVerificationPoints().get(0));
 	}
 	
 	@Test public void shouldGetExecutionPeriod(){
 		Period period = parser.getExecutionPeriod();
 		assertEquals(0, period.getHours());
-		assertEquals(0, period.getMinutes());
-		assertEquals(0, period.getSeconds());
+		assertEquals(1, period.getMinutes());
+		assertEquals(22, period.getSeconds());
 	}
 	
 	@Test public void shouldParseDateString(){
 		Date date = parser.parseDateString("25-May-2012 07:25:25.421 PM");
-//		Date date = parser.parseDateString("25-May-2012 07:25:25.421 PM");
-//		assertEquals(2012, date.getYear());
-		assertEquals(25, date.getDate());
-		assertEquals(5, date.getMonth());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		assertEquals(2012, cal.get(Calendar.YEAR));
+		assertEquals(25, cal.get(Calendar.DAY_OF_MONTH));
+		assertEquals(25, cal.get(Calendar.SECOND));
+		assertEquals(5, cal.get(Calendar.MONTH));
 	}
 	
 	@Test public void shouldConvertMonth(){
