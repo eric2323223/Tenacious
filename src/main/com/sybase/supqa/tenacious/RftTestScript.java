@@ -1,5 +1,7 @@
 package com.sybase.supqa.tenacious;
 
+import java.io.File;
+
 
 public class RftTestScript {
 	private final String name;
@@ -16,7 +18,13 @@ public class RftTestScript {
 
 	public RftTestScript(String name){
 		this.name = name;
-		this.logFileName = new TenaciousConfig().getSuptafRootPath();
+		String root = new TenaciousConfig().getSuptafLogRootPath();
+		String path = name.replace("\\.", File.separator);
+		logFileName = root+File.separator+path;
+	}
+	
+	public String getLogFileName(){
+		return logFileName;
 	}
 
 	public void run() {

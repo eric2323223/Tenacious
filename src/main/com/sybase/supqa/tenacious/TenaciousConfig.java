@@ -36,6 +36,11 @@ public class TenaciousConfig {
 		return helper.getProperty("SUPTAF_ROOT_PATH");
 	}
 	
+	public String getSuptafLogRootPath(){
+		PropertiesFileHelper helper = new PropertiesFileHelper(getTenaciousPropertiesFile());
+		return helper.getProperty("SUPTAF_LOG_ROOT_PATH");
+	}
+	
 	public static void main(String[] args){
 		System.out.println(new TenaciousConfig().getTenaciousRootPath());
 	}
