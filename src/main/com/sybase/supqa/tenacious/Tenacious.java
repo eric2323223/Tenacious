@@ -11,6 +11,7 @@ import java.util.List;
 import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
 import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
+import com.sybase.supqa.tenacious.util.StringUtil;
 
 public class Tenacious {
 	private TenaciousConfig tenaciousConfig;
@@ -122,15 +123,15 @@ public class Tenacious {
 
 	String generateTenaciousStartBatchCode() {
 		String javaPath = getJavaPath();
-		String classPath = "-cp \""+tenaciousConfig.getTenaciousRootPath()+File.separator+"bin\""+File.pathSeparator+"\""+
-			tenaciousConfig.getTenaciousRootPath()+File.separator+"lib\\*\"";
+		String classPath = "-cp "+StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"bin")+
+			File.pathSeparator+StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"lib\\*");
 		String mainClass = "com.sybase.supqa.tenacious.Tenacious";
 		return javaPath+ " "+ classPath + " "+mainClass;
 	}
 
-	private String getJavaPath() {
+	public static String getJavaPath() {
 		String path = System.getProperty("sun.boot.library.path");
-		return "\""+path+File.separator+"java.exe\"";
+		return StringUtil.quote(path+File.separator+"java.exe");
 	}
 
 }

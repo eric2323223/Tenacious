@@ -17,8 +17,7 @@ public class RftTestSuiteRunner {
 	public List<RftTestScript> runTestSuite(List<RftTestScript> tests, IExecutionPolicy policy){
 		this.allTests = tests;
 		for(RftTestScript test:allTests){
-			RftTestRunner runner = new RftTestRunner();
-			currentTestResult = runner.runTest(test);
+			currentTestResult = test.run();
 			finishedTests.add(test);
 			if(!currentTestResult.isPass()){
 				failedTests.add(test);

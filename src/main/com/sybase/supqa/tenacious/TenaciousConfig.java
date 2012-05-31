@@ -7,6 +7,7 @@ import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
 public class TenaciousConfig {
 	
 	private String pwd;
+	private PropertiesFileHelper helper = new PropertiesFileHelper(getTenaciousPropertiesFile());
 	
 	public String getTenaciousRootPath() {
 		if(pwd==null){
@@ -32,17 +33,19 @@ public class TenaciousConfig {
 	}
 	
 	public String getSuptafRootPath(){
-		PropertiesFileHelper helper = new PropertiesFileHelper(getTenaciousPropertiesFile());
 		return helper.getProperty("SUPTAF_ROOT_PATH");
 	}
 	
 	public String getSuptafLogRootPath(){
-		PropertiesFileHelper helper = new PropertiesFileHelper(getTenaciousPropertiesFile());
 		return helper.getProperty("SUPTAF_LOG_ROOT_PATH");
 	}
 	
 	public static void main(String[] args){
-		System.out.println(new TenaciousConfig().getTenaciousRootPath());
+		System.out.println(new TenaciousConfig().getSuptafRootPath());
+	}
+
+	public String getRftFtJar() {
+		return helper.getProperty("RFT_FT_PATH");
 	}
 
 }

@@ -9,9 +9,11 @@ public class Cmd {
 		try {
 			p = Runtime.getRuntime().exec(command);
 			p.waitFor();
+			System.out.println("command terminated!");
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
