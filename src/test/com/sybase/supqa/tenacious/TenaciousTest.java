@@ -11,6 +11,7 @@ import org.junit.Test;
 public class TenaciousTest {
 	private Tenacious tenacious;
 	private TenaciousConfig config;
+	private TestQueue testQueue;
 	
 	@Before public void setup(){
 		config = new TestConfig();
@@ -31,6 +32,22 @@ public class TenaciousTest {
 				"\"C:\\Documents and Settings\\test\\Tenacious\\bin\";" +
 				"\"C:\\Documents and Settings\\test\\Tenacious\\lib\\*\" " +
 				"com.sybase.supqa.tenacious.Tenacious", code);
+	}
+	
+	@Test public void shouldNotTestWhenNoToDoTests(){
+		testQueue = new TestQueue(config.getTenaciousRootPath()+File.separator
+				+"src"+File.separator+"test"+File.separator+"fixture"+File.separator
+				+"TestQueue_None");
+		tenacious.runTests(testQueue);
+		assertEquals(0, testQueue.getAllTests().size());
+	}
+	
+	@Test public void shouldTestAllScripts(){
+		testQueue = new TestQueue(config.getTenaciousRootPath()+File.separator
+				+"src"+File.separator+"test"+File.separator+"fixture"+File.separator
+				+"TestQueue");
+		tenacious.runTests(testQueue);
+		assertEquals(0, testQueue.getTodoTests().size());
 	}
 	
 //	@After public void cleanup(){

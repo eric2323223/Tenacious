@@ -14,15 +14,34 @@ public class RftTestSuiteRunner {
 	private RftTestResult currentTestResult;
 	private final long start = new Date().getTime();
 	
-	public List<RftTestScript> runTestSuite(List<RftTestScript> tests, IExecutionPolicy policy){
-		this.allTests = tests;
-		for(RftTestScript test:allTests){
-			currentTestResult = test.run();
-			updateTestQueueFile(test);
-			finishedTests.add(test);
-			if(!currentTestResult.isPass()){
-				failedTests.add(test);
-			}
+//	public List<RftTestScript> runTestSuite(List<String> tests, IExecutionPolicy policy){
+//		this.allTests = tests;
+//		for(RftTestScript test:allTests){
+//			currentTestResult = test.run();
+//			updateTestQueueFile(test);
+//			finishedTests.add(test);
+//			if(!currentTestResult.isPass()){
+//				failedTests.add(test);
+//			}
+//			ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(""));
+//			if(policy.getCleanUpStatus(this)==CleanUpStatus.BASIC_CLEANUP){
+//				handler.basicCleanup();
+//			}
+//			if(policy.getCleanUpStatus(this)==CleanUpStatus.ADVANCED_CLEANUP){
+//				handler.advancedCleanup();
+//			}
+//			if(policy.getCleanUpStatus(this)==CleanUpStatus.ULTIMATE_CLEANUP){
+//				handler.ultimateCleanup();
+//			}
+//		}
+//		return failedTests;
+//	}
+
+	public void runTestSuite(List<String> tests, IExecutionPolicy policy, TestQueue queue){
+		for(String test:tests){
+			RftTestScript script = new RftTestScript(test);
+			currentTestResult = script.run();
+			script.setResult(currentTestResult);
 			ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(""));
 			if(policy.getCleanUpStatus(this)==CleanUpStatus.BASIC_CLEANUP){
 				handler.basicCleanup();
@@ -34,14 +53,8 @@ public class RftTestSuiteRunner {
 				handler.ultimateCleanup();
 			}
 		}
-		return failedTests;
 	}
-
-	private void updateTestQueueFile(RftTestScript script) {
-		
-		
-	}
-
+	
 	public int totalTestCount(){
 		return allTests.size();
 	}

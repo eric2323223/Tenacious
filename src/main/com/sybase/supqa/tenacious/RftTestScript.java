@@ -74,5 +74,9 @@ public class RftTestScript {
 		}
 		return this.name+"\t"+status+"\t"+detail;
 	}
+
+	public void setResult(RftTestResult result) {
+		this.result = result;
+	}
 	
 }

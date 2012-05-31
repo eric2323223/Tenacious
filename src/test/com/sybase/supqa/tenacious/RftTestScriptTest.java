@@ -27,7 +27,7 @@ public class RftTestScriptTest {
 				"-playback testscript.workflow.screen.script1", script.buildRftPlaybackCommandString());
 	}
 	
-	@Test 
+//	@Test 
 	public void shouldRunTest(){
 		script = new RftTestScript("Test");
 		RftTestResult result = script.run();

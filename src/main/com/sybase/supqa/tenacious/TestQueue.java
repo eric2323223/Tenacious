@@ -6,13 +6,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestQueue {
 	private File testQueueFile;
-	private List<String> allTests;
-	private List<String> todoTests;
-	private List<String> doneTests;
+	private List<String> allTests = new ArrayList<String>();
+	private List<String> todoTests = new ArrayList<String>();
+	private List<String> doneTests = new ArrayList<String>();
 	
 	public TestQueue(String fileName){
 		this.testQueueFile = new File(fileName);
@@ -84,6 +85,16 @@ public class TestQueue {
 
 	private boolean isTodoTest(String test) {
 		return test.split("\t").length>1?false:true;
+	}
+
+	public void clear() {
+		allTests.clear();
+		persist();
+	}
+
+	public List<String> getAllTests() {
+		loadTests();
+		return this.allTests;
 	}
 	
 }

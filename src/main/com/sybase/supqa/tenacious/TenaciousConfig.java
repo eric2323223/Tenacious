@@ -29,7 +29,7 @@ public class TenaciousConfig {
 	}
 	
 	public String getTenaciousTestQueueFile() {
-		return getTenaciousRootPath()+File.separator+"TestResults"+File.separator+"TestQueue.txt";
+		return getTenaciousRootPath()+File.separator+"TestResults"+File.separator+"TestQueue";
 	}
 	
 	public String getSuptafRootPath(){

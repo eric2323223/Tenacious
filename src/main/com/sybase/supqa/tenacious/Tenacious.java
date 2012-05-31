@@ -21,64 +21,28 @@ public class Tenacious {
 	}
 
 	public static void main(String[] args){
-		Tenacious tenacious = new Tenacious(new TenaciousConfig());
+		TenaciousConfig config = new TenaciousConfig();
+		Tenacious tenacious = new Tenacious(config);
 		if(tenacious.ifTenaciousInstalled()){
 			tenacious.install();
 		}
-		tenacious.runTests(tenacious.loadTestQueue());
+		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
+		tenacious.runTests(testQueue);
 	}
 
-	void runTests(List<RftTestScript> tests) {
+	void runTests(TestQueue queue) {
+		List<String> tests = queue.getTodoTests();
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
 			PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPolicyConfigFile());
-			runner.runTestSuite(tests, PolicyFactory.getPolicy(config));
-			List<RftTestScript> failedTests = loadTestQueue();
-			if(tests.size()==failedTests.size()){
-				cleanTestQueue();
+			runner.runTestSuite(tests, PolicyFactory.getPolicy(config), queue);
+			List<String> todoTests = queue.getTodoTests();
+			if(tests.size()==todoTests.size()){
+				queue.clear();
 				return;
 			}else{
 				ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(tenaciousConfig.getTenaciousPolicyConfigFile()));
 				handler.ultimateCleanup();
-			}
-		}
-	}
-
-	private void cleanTestQueue() {
-		File file = new File(tenaciousConfig.getTenaciousTestQueueFile());
-		FileWriter writer = null;
-		try {
-			writer = new FileWriter(file);
-			writer.write("");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				writer.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private List<RftTestScript> loadTestQueue() {
-		List<RftTestScript> tests = new ArrayList<RftTestScript>();
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(tenaciousConfig.getTenaciousTestQueueFile()));
-			String line;
-			while((line=reader.readLine())!=null){
-				tests.add(new RftTestScript(line));
-			}
-			return tests;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		} finally{
-			try {
-				reader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
