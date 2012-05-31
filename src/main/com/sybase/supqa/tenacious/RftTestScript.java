@@ -57,4 +57,22 @@ public class RftTestScript {
 		System.out.println("done");
 	}
 	
+	public String toString(){
+		String status="";
+		String detail= "";
+		RftTestResult result = getResult();
+		if(result.isPass()){
+			status = "pass";
+		}else{
+			if(result.getException()!=null){
+				status = "exception";
+				detail = result.getException();
+			}else{
+				status = "fail";
+				detail = result.getFailedVerificationPoints().toString();
+			}
+		}
+		return this.name+"\t"+status+"\t"+detail;
+	}
+	
 }

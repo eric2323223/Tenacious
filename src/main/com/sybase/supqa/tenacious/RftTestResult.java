@@ -30,5 +30,9 @@ public class RftTestResult {
 	public Period getExecutePeriod(){
 		return this.executePeriod;
 	}
+	
+	public String getException(){
+		return this.exception;
+	}
 
 }

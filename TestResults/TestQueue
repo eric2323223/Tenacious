@@ -1,0 +1,4 @@
+test1	pass
+test2	fail	vp1,vp2
+test3	fail	vp1
+test4	exception	NullPointerException

@@ -18,6 +18,7 @@ public class RftTestSuiteRunner {
 		this.allTests = tests;
 		for(RftTestScript test:allTests){
 			currentTestResult = test.run();
+			updateTestQueueFile(test);
 			finishedTests.add(test);
 			if(!currentTestResult.isPass()){
 				failedTests.add(test);
@@ -35,7 +36,12 @@ public class RftTestSuiteRunner {
 		}
 		return failedTests;
 	}
-	
+
+	private void updateTestQueueFile(RftTestScript script) {
+		
+		
+	}
+
 	public int totalTestCount(){
 		return allTests.size();
 	}

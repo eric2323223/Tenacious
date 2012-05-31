@@ -13,7 +13,8 @@ import com.sybase.supqa.tenacious.util.EnvironementVariableUtilTest;
 	EnvironementVariableUtilTest.class,
 	CleanupHandlerFactoryTest.class,
 	RftHtmlLogParserTest.class,
-	RftTestResultTest.class
+	RftTestResultTest.class,
+	RftTestScriptTest.class
 	})
 public class AllTests {
 
