@@ -1,0 +1,1 @@
+"C:\Program Files\Java\jre6\bin\java.exe" -cp "C:\Users\think\workspace_new\Tenacious\bin";"C:\Users\think\workspace_new\Tenacious\lib\*" com.sybase.supqa.tenacious.Tenacious

@@ -8,7 +8,6 @@ import java.util.List;
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
 import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
-import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
 import com.sybase.supqa.tenacious.util.StringUtil;
 
 public class Tenacious {
@@ -46,7 +45,7 @@ public class Tenacious {
 	}
 	
 	private boolean ifTenaciousInstalled(){
-		File configFile = getTenaciousBatchFile();
+		File configFile = getTenaciousStartupBatchFile();
 		if(configFile.exists()){
 			return true;
 		}else{
@@ -60,10 +59,12 @@ public class Tenacious {
 	}
 	
 	void generateStartupBatchFile(){
-		File tenaciousBatchFile = getTenaciousBatchFile();
+		File tenaciousBatchFile = getTenaciousStartupBatchFile();
 		FileWriter writer = null;
 		try {
 			writer = new FileWriter(tenaciousBatchFile);
+			writer.write(startSupWorkspaceBatchCode());
+			writer.write("\n");
 			writer.write(generateTenaciousStartBatchCode());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -76,6 +77,10 @@ public class Tenacious {
 		}
 	}
 	
+	private String startSupWorkspaceBatchCode() {
+		return "start /wait c:\\sybase\\unwiredflatform\\***.bat";
+	}
+
 	void generateLocalBatchFile(){
 		File tenaciousBatchFile = getTenaciousBatchFile();
 		FileWriter writer = null;
@@ -94,11 +99,12 @@ public class Tenacious {
 	}
 
 	private File getTenaciousBatchFile() {
-//		PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPropertiesFile());
-//		String startFolder = config.getProperty("START_FOLDER");
-		TenaciousConfig config = new TenaciousConfig();
-		String startFolder = config.getWindowsStartupFolder();
-		return new File(startFolder+File.separator+"tenacious.properties");
+		return new File(tenaciousConfig.getTenaciousRootPath()+File.separator+"tenacious.bat");
+	}
+
+	private File getTenaciousStartupBatchFile() {
+		String startFolder = tenaciousConfig.getWindowsStartupFolder();
+		return new File(startFolder+File.separator+"tenacious.bat");
 	}
 
 	String generateTenaciousStartBatchCode() {
