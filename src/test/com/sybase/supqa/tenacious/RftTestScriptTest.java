@@ -15,15 +15,15 @@ public class RftTestScriptTest {
 
 	@Test
 	public void shouldGetLogFileName() {
-		assertEquals("C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET_logs\\testscript\\workflow\\screen\\script1\\rational_ft_logframe.html", script.getLogFileName());
+		assertEquals("C:\\Documents and Settings\\eric\\IBM\\rationalsdp\\workspace\\UEP_ET_logs\\testscript\\workflow\\screen\\script1\\rational_ft_logframe.html", script.getLogFileName());
 	}
 	
 	@Test 
 	public void shouldGenerateRftCliCommand(){
 		assertEquals("\"C:\\Program Files\\IBM\\SDP\\jdk\\jre\\bin\\java.exe\" " +
-				"-classpath \"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET\";\"C:\\Program Files\\IBM\\SDP\\FunctionalTester\\bin\\rational_ft.jar\";\"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET\\lib\\*\" " +
+				"-classpath \"C:\\Documents and Settings\\eric\\IBM\\rationalsdp\\workspace\\UEP_ET\";\"C:\\Program Files\\IBM\\SDP\\FunctionalTester\\bin\\rational_ft.jar\";\"C:\\Documents and Settings\\eric\\IBM\\rationalsdp\\workspace\\UEP_ET\\lib\\*\" " +
 				"com.rational.test.ft.rational_ft " +
-				"-datastore \"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET\" " +
+				"-datastore \"C:\\Documents and Settings\\eric\\IBM\\rationalsdp\\workspace\\UEP_ET\" " +
 				"-playback testscript.workflow.screen.script1", script.buildRftPlaybackCommandString());
 	}
 	

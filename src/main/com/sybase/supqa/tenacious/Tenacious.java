@@ -1,13 +1,11 @@
 package com.sybase.supqa.tenacious;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
 import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
 import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
@@ -24,25 +22,24 @@ public class Tenacious {
 		TenaciousConfig config = new TenaciousConfig();
 		Tenacious tenacious = new Tenacious(config);
 		if(tenacious.ifTenaciousInstalled()){
-			tenacious.install();
+			tenacious.generateStartupBatchFile();
 		}
 		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
-		tenacious.runTests(testQueue);
+		tenacious.runTests(testQueue, PolicyFactory.getPolicy(new PolicyConfig(config.getTenaciousPolicyConfigFile())));
 	}
 
-	void runTests(TestQueue queue) {
+	void runTests(TestQueue queue, IExecutionPolicy policy) {
+		ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(new TenaciousConfig().getTenaciousPolicyConfigFile()));
 		List<String> tests = queue.getTodoTests();
 		if(tests.size()>0){
 			RftTestSuiteRunner runner = new RftTestSuiteRunner();
-			PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPolicyConfigFile());
-			runner.runTestSuite(tests, PolicyFactory.getPolicy(config), queue);
+			runner.runTestSuite(policy, queue, handler);
 			List<String> todoTests = queue.getTodoTests();
 			if(tests.size()==todoTests.size()){
 				queue.clear();
 				return;
 			}else{
-				ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(tenaciousConfig.getTenaciousPolicyConfigFile()));
-				handler.ultimateCleanup();
+				handler.handle(policy, runner);
 			}
 		}
 	}
@@ -56,13 +53,29 @@ public class Tenacious {
 		}
 	}
 	
-	private File getTenaciousPropertiesFile(){
-		PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPropertiesFile());
-		String startFolder = config.getProperty("START_FOLDER");
-		return new File(startFolder+File.separator+"tenacious.properties");
+	void install(){
+		generateLocalBatchFile();
+		generateStartupBatchFile();
 	}
 	
-	private void install(){
+	void generateStartupBatchFile(){
+		File tenaciousBatchFile = getTenaciousBatchFile();
+		FileWriter writer = null;
+		try {
+			writer = new FileWriter(tenaciousBatchFile);
+			writer.write(generateTenaciousStartBatchCode());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	void generateLocalBatchFile(){
 		File tenaciousBatchFile = getTenaciousBatchFile();
 		FileWriter writer = null;
 		try {

@@ -53,6 +53,7 @@ public class RftTestScript {
 				"-classpath \"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET\";\"C:\\Program Files\\IBM\\SDP\\FunctionalTester\\bin\\rational_ft.jar\";\"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET_log\\lib\\*\" " +
 				"com.rational.test.ft.rational_ft " +
 				"-datastore \"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET\" " +
+				"-rt.bring_up_logviewer false "+
 				"-playback Test");
 		System.out.println("done");
 	}

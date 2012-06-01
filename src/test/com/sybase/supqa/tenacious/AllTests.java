@@ -4,7 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.sybase.supqa.tenacious.policy.PolicyFactoryTest;
+import com.sybase.supqa.tenacious.PolicyFactoryTest;
 import com.sybase.supqa.tenacious.util.EnvironementVariableUtilTest;
 
 @RunWith(Suite.class)
@@ -14,7 +14,10 @@ import com.sybase.supqa.tenacious.util.EnvironementVariableUtilTest;
 	CleanupHandlerFactoryTest.class,
 	RftHtmlLogParserTest.class,
 	RftTestResultTest.class,
-	RftTestScriptTest.class
+	RftTestScriptTest.class,
+	TestQueueTest.class,
+	TenaciousTest.class,
+	PolicyFactoryTest.class
 	})
 public class AllTests {
 

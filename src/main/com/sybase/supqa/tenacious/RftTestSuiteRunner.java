@@ -37,21 +37,23 @@ public class RftTestSuiteRunner {
 //		return failedTests;
 //	}
 
-	public void runTestSuite(List<String> tests, IExecutionPolicy policy, TestQueue queue){
+	public void runTestSuite(IExecutionPolicy policy, TestQueue queue, ICleanupHandler handler){
+		List<String> tests = queue.getTodoTests();
 		for(String test:tests){
 			RftTestScript script = new RftTestScript(test);
 			currentTestResult = script.run();
 			script.setResult(currentTestResult);
-			ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(""));
-			if(policy.getCleanUpStatus(this)==CleanUpStatus.BASIC_CLEANUP){
-				handler.basicCleanup();
-			}
-			if(policy.getCleanUpStatus(this)==CleanUpStatus.ADVANCED_CLEANUP){
-				handler.advancedCleanup();
-			}
-			if(policy.getCleanUpStatus(this)==CleanUpStatus.ULTIMATE_CLEANUP){
-				handler.ultimateCleanup();
-			}
+//			ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(new TenaciousConfig().getTenaciousPolicyConfigFile()));
+			handler.handle(policy, this);
+//			if(policy.getCleanUpStatus(this)==CleanUpStatus.BASIC_CLEANUP){
+//				handler.basicCleanup();
+//			}
+//			if(policy.getCleanUpStatus(this)==CleanUpStatus.ADVANCED_CLEANUP){
+//				handler.advancedCleanup();
+//			}
+//			if(policy.getCleanUpStatus(this)==CleanUpStatus.ULTIMATE_CLEANUP){
+//				handler.ultimateCleanup();
+//			}
 		}
 	}
 	

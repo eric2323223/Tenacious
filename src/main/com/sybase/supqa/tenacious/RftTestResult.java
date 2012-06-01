@@ -1,6 +1,5 @@
 package com.sybase.supqa.tenacious;
 
-import java.io.File;
 import java.util.List;
 
 import org.joda.time.Period;

@@ -1,36 +1,38 @@
 package com.sybase.supqa.tenacious.policy;
 
+import java.io.File;
 import java.util.List;
 
-import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
+import com.sybase.supqa.tenacious.PolicyConfig;
+import com.sybase.supqa.tenacious.TenaciousConfig;
 
 public class PolicyFactory {
 	
-	public static IExecutionPolicy getPolicy(PropertiesFileHelper config){
-		if(config.getProperty(PolicyType.TIME_PERIOD)!=null){
-			TimePeriodPolicy policy = new TimePeriodPolicy();
-			policy.addThreshold(PolicyType.TIME_PERIOD, config.getProperty(PolicyType.TIME_PERIOD));
-			return policy;
-		}
-		if(config.getProperty(PolicyType.FINISHED_TEST_NUMBER)!=null){
-			FinishTestNumberPolicy policy = new FinishTestNumberPolicy();
-			policy.addThreshold(PolicyType.FINISHED_TEST_NUMBER, config.getProperty(PolicyType.FINISHED_TEST_NUMBER));
-			return policy;
-		}
-		if(config.getProperty(PolicyType.RESOURCE_USAGE)!=null){
-			ResourceUsagePolicy policy = new ResourceUsagePolicy();
-			String value = config.getProperty(PolicyType.RESOURCE_USAGE);
-			for(String keyValue:value.split(",")){
-				String k = keyValue.split(":")[0];
-				String v = keyValue.split(":")[1];
-				policy.addThreshold(k, v);
-			}
-			return policy;
-		}
-		else{
-			return new DefaultPolicy();
-		}
-	}
+//	public static IExecutionPolicy getPolicy(PropertiesFileHelper config){
+//		if(config.getProperty(PolicyType.TIME_PERIOD)!=null){
+//			TimePeriodPolicy policy = new TimePeriodPolicy();
+//			policy.addThreshold(PolicyType.TIME_PERIOD, config.getProperty(PolicyType.TIME_PERIOD));
+//			return policy;
+//		}
+//		if(config.getProperty(PolicyType.FINISHED_TEST_NUMBER)!=null){
+//			FinishTestNumberPolicy policy = new FinishTestNumberPolicy();
+//			policy.addThreshold(PolicyType.FINISHED_TEST_NUMBER, config.getProperty(PolicyType.FINISHED_TEST_NUMBER));
+//			return policy;
+//		}
+//		if(config.getProperty(PolicyType.RESOURCE_USAGE)!=null){
+//			ResourceUsagePolicy policy = new ResourceUsagePolicy();
+//			String value = config.getProperty(PolicyType.RESOURCE_USAGE);
+//			for(String keyValue:value.split(",")){
+//				String k = keyValue.split(":")[0];
+//				String v = keyValue.split(":")[1];
+//				policy.addThreshold(k, v);
+//			}
+//			return policy;
+//		}
+//		else{
+//			return new DefaultPolicy();
+//		}
+//	}
 	
 	public static IExecutionPolicy getPolicy(PolicyConfig config){
 		String className = config.getPolicyClassName();
@@ -45,6 +47,12 @@ public class PolicyFactory {
 			e.printStackTrace();
 			throw new RuntimeException("Failed to create IExecutionPolicy instance");
 		}
+	}
+
+	public static void main(String[] args){
+		TenaciousConfig cfg = new TenaciousConfig();
+		PolicyConfig config = new PolicyConfig(cfg.getTestFixureFolder()+File.separator+"policy_TimePeriod.xml");
+		PolicyFactory.getPolicy(config);
 	}
 
 }

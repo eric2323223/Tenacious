@@ -1,25 +1,35 @@
 package com.sybase.supqa.tenacious;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
+import com.sybase.supqa.tenacious.policy.PolicyFactory;
+
 
 public class TenaciousTest {
 	private Tenacious tenacious;
 	private TenaciousConfig config;
 	private TestQueue testQueue;
+	private IExecutionPolicy policy;
 	
 	@Before public void setup(){
 		config = new TestConfig();
 		tenacious = new Tenacious(config);
+		TenaciousConfig config = new TenaciousConfig();
+		policy = PolicyFactory.getPolicy(new PolicyConfig(config.getTenaciousPolicyConfigFile()));
 	}
 	
-	@Test public void shouldInstallInFirstTime(){
-		
+	@Test public void shouldInstall(){
+		tenacious.generateStartupBatchFile();
+		File file1 = new File(config.getTenaciousRootPath()+File.separator+"teancious.bat");
+		assertEquals(true, file1.exists());
+		File file2 = new File(config.getWindowsStartupFolder()+File.separator+"tenacious.bat");
+		assertEquals(true, file2.exists());
 	}
 	
 	@Test public void shouldrunTestsInTestQueueUntilResultNotChange(){
@@ -38,7 +48,7 @@ public class TenaciousTest {
 		testQueue = new TestQueue(config.getTenaciousRootPath()+File.separator
 				+"src"+File.separator+"test"+File.separator+"fixture"+File.separator
 				+"TestQueue_None");
-		tenacious.runTests(testQueue);
+		tenacious.runTests(testQueue, policy);
 		assertEquals(0, testQueue.getAllTests().size());
 	}
 	
@@ -46,17 +56,8 @@ public class TenaciousTest {
 		testQueue = new TestQueue(config.getTenaciousRootPath()+File.separator
 				+"src"+File.separator+"test"+File.separator+"fixture"+File.separator
 				+"TestQueue");
-		tenacious.runTests(testQueue);
+		tenacious.runTests(testQueue, policy);
 		assertEquals(0, testQueue.getTodoTests().size());
-	}
-	
-//	@After public void cleanup(){
-//		deleteTestQueueFile();
-//	}
-	
-	private void deleteTestQueueFile() {
-		File file = new File(config.getTenaciousTestQueueFile());
-		file.delete();
 	}
 
 	public class TestConfig extends TenaciousConfig{
@@ -72,5 +73,7 @@ public class TenaciousTest {
 			return getTenaciousRootPath()+File.separator+"test"+File.separator+"fixture"+File.separator+"TestResults"+File.separator+"TestQueue.txt";
 		}
 	}
+	
+	
 
 }

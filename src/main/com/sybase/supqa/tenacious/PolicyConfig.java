@@ -50,7 +50,10 @@ public class PolicyConfig {
 		Elements elements = rootElement.getChildElements();
 		for(int i=0;i<elements.size(); i++){
 			Element element = elements.get(i);
-			names.add(element.getQualifiedName());
+			if(element.getQualifiedName().equals("parameter")){
+				Attribute nameAttr = element.getAttribute("name");
+				names.add(nameAttr.getValue());
+			}
 		}
 		return names;
 	}

@@ -48,4 +48,12 @@ public class TenaciousConfig {
 		return helper.getProperty("RFT_FT_PATH");
 	}
 
+	public String getTestFixureFolder() {
+		return getTenaciousRootPath()+ File.separator+"src"+File.separator+"test"+File.separator+"fixture";
+	}
+	
+	public String getWindowsStartupFolder(){
+		return helper.getProperty("STARTUP_FOLDER");
+	}
+
 }

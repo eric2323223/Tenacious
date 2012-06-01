@@ -21,7 +21,8 @@ public class PolicyConfig {
 			doc = new Builder().build(configFile);
 			rootElement = doc.getRootElement();
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to pase "+fileName);
+			e.printStackTrace();
+			throw new RuntimeException("Failed to parse "+fileName);
 		}
 	}
 	

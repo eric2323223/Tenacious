@@ -12,8 +12,6 @@ import java.util.List;
 public class TestQueue {
 	private File testQueueFile;
 	private List<String> allTests = new ArrayList<String>();
-	private List<String> todoTests = new ArrayList<String>();
-	private List<String> doneTests = new ArrayList<String>();
 	
 	public TestQueue(String fileName){
 		this.testQueueFile = new File(fileName);
@@ -22,17 +20,30 @@ public class TestQueue {
 	
 	public List<String> getTodoTests(){
 		loadTests();
+		List<String> todoTests = new ArrayList<String>();
+		for(String test:allTests){
+			if(isTodoTest(test)){
+				todoTests.add(test);
+			}
+		}
 		return todoTests;
 	}
-	
+
 	public List<String> getDoneTests(){
 		loadTests();
+		loadTests();
+		List<String> doneTests = new ArrayList<String>();
+		for(String test:allTests){
+			if(!isTodoTest(test)){
+				doneTests.add(test);
+			}
+		}
 		return doneTests;
 	}
 	
 	public void updateTestStatus(RftTestScript script){
 		for(int i=0;i<allTests.size();i++){
-			if(allTests.get(i).startsWith(script.getName())){
+			if(allTests.get(i).split("\t")[0].equals(script.getName())){
 				allTests.set(i, script.toString());
 			}
 		}
@@ -59,29 +70,29 @@ public class TestQueue {
 	}
 	
 	private void loadTests(){
-		BufferedReader br = null;
-		try {
-			br = new BufferedReader(new FileReader(this.testQueueFile));
-			String test;
-			while((test=br.readLine())!=null){
-				allTests.add(test);
-				if(isTodoTest(test)){
-					todoTests.add(test);
-				}else{
-					doneTests.add(test);
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+		if(!isLoaded()){
+			BufferedReader br = null;
 			try {
-				br.close();
+				br = new BufferedReader(new FileReader(this.testQueueFile));
+				String test;
+				while((test=br.readLine())!=null){
+					allTests.add(test);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
+	private boolean isLoaded() {
+		return allTests.size()>0;
+	}
 
 	private boolean isTodoTest(String test) {
 		return test.split("\t").length>1?false:true;
