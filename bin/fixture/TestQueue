@@ -1,5 +1,0 @@
-Test1	pass
-Test2	fail	vp1,vp2
-Test3	exception	NullPointerException
-Test4	exception	Script end [testscript.Workflow.AsyncErrHdl.AsyncErrHdl_Notification_NoMBO]
-Test5

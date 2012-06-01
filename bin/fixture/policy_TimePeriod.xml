@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<policy class="com.sybase.supqa.tenacious.policy.TimePeriodPolicy">
-	<parameter name="timePeriod" value="3600" />
-	<cleanupHandler class="com.sybase.supqa.tenacious.HouseKeeper" />
-</policy>
