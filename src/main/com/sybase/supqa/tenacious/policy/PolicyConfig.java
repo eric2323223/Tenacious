@@ -52,8 +52,8 @@ public class PolicyConfig {
 		for(int i=0;i<elements.size(); i++){
 			Element element = elements.get(i);
 			if(element.getQualifiedName().equals("parameter")){
-				Attribute parameterName = element.getAttribute("name");
-				names.add(parameterName.getValue());
+				Attribute nameAttr = element.getAttribute("name");
+				names.add(nameAttr.getValue());
 			}
 		}
 		return names;

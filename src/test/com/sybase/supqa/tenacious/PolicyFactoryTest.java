@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.sybase.supqa.tenacious.policy.FinishTestNumberPolicy;
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
+import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
 import com.sybase.supqa.tenacious.policy.TimePeriodPolicy;
 

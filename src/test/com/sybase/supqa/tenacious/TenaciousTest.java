@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
+import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
 
 
@@ -25,7 +26,7 @@ public class TenaciousTest {
 	}
 	
 	@Test public void shouldInstall(){
-		tenacious.generateStartupBatchFile();
+		tenacious.install();
 		File file1 = new File(config.getTenaciousRootPath()+File.separator+"teancious.bat");
 		assertEquals(true, file1.exists());
 		File file2 = new File(config.getWindowsStartupFolder()+File.separator+"tenacious.bat");

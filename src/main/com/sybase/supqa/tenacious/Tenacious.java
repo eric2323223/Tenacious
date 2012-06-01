@@ -25,7 +25,8 @@ public class Tenacious {
 			tenacious.generateStartupBatchFile();
 		}
 		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
-		tenacious.runTests(testQueue, PolicyFactory.getPolicy(new PolicyConfig(config.getTenaciousPolicyConfigFile())));
+		PolicyConfig policyConfig = new PolicyConfig(config.getTenaciousPolicyConfigFile());
+		tenacious.runTests(testQueue, PolicyFactory.getPolicy(policyConfig));
 	}
 
 	void runTests(TestQueue queue, IExecutionPolicy policy) {
@@ -93,8 +94,10 @@ public class Tenacious {
 	}
 
 	private File getTenaciousBatchFile() {
-		PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPropertiesFile());
-		String startFolder = config.getProperty("START_FOLDER");
+//		PropertiesFileHelper config = new PropertiesFileHelper(tenaciousConfig.getTenaciousPropertiesFile());
+//		String startFolder = config.getProperty("START_FOLDER");
+		TenaciousConfig config = new TenaciousConfig();
+		String startFolder = config.getWindowsStartupFolder();
 		return new File(startFolder+File.separator+"tenacious.properties");
 	}
 
