@@ -50,7 +50,7 @@ public class RftTestScript {
 //		}
 //		Cmd.execute("c:\\tenacious_runscript.bat");
 		
-		Cmd.execute("cmd /C start/wait "+buildRftPlaybackCommandString());
+		Cmd.execute(buildRftPlaybackCommandString());
 		
 		result = new RftTestResult(logFileName);
 		this.setResult(result);

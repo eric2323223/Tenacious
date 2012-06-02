@@ -1,10 +1,18 @@
 package com.sybase.supqa.tenacious;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.sybase.supqa.tenacious.policy.DefaultPolicy;
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
+import com.sybase.supqa.tenacious.policy.PolicyConfig;
+import com.sybase.supqa.tenacious.policy.PolicyFactory;
+import com.sybase.supqa.tenacious.policy.PolicyType;
+import com.sybase.supqa.tenacious.policy.TimePeriodPolicy;
 
 public class RftTestSuiteRunner {
 	private List<RftTestScript> finishedTests = new ArrayList<RftTestScript>();
@@ -29,7 +37,6 @@ public class RftTestSuiteRunner {
 				if(policy.getCleanUpStatus(this)==CleanUpStatus.ULTIMATE_CLEANUP){
 					handler.ultimateCleanup();
 				}
-				
 			}
 		}
 	}
@@ -52,6 +59,19 @@ public class RftTestSuiteRunner {
 
 	public int getFinishedTestsCount() {
 		return finishedTests.size();
+	}
+	
+	public static void main(String[] args){
+		TenaciousConfig config = new TenaciousConfig();
+		IExecutionPolicy policy = PolicyFactory.getPolicy(new PolicyConfig(config.getTestFixureFolder()+File.separator+"policy_TimePeriod.xml"));
+		RftTestSuiteRunner runner = new RftTestSuiteRunner();
+		TestQueue queue = new TestQueue(config.getDefaultTestQueue());
+		CleanupHandlerForTest handler = new CleanupHandlerForTest();
+		
+//		runner.runTestSuite(policy, queue, handler);
+		//TODO watch this
+		policy = new DefaultPolicy();
+		runner.runTestSuite(policy, queue, handler);
 	}
 	
 }

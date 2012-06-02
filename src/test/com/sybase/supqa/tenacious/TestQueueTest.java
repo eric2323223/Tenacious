@@ -28,12 +28,12 @@ public class TestQueueTest {
 	}
 	
 	@Test public void shouldGetAllTests(){
-		assertEquals(5, testQueue.getAllTests().size());
+		assertEquals(8, testQueue.getAllTests().size());
 	}
 	
 	@Test public void shouldGetTodoTest(){
 		List<String> todoTests = testQueue.getTodoTests();
-		assertEquals(2, todoTests.size());
+		assertEquals(5, todoTests.size());
 	}
 	
 	@Test public void shouldGetDoneTest(){
@@ -46,7 +46,7 @@ public class TestQueueTest {
 		RftTestResult result = new RftTestResult(config.getTestFixureFolder()+File.separator+"rational_ft_logframe.html");
 		script.setResult(result);
 		testQueue.updateTestStatus(script);
-		assertEquals(1, testQueue.getTodoTests().size());
+		assertEquals(4, testQueue.getTodoTests().size());
 	}
 	
 

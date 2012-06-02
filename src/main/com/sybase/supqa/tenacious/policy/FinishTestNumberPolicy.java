@@ -8,7 +8,7 @@ public class FinishTestNumberPolicy extends DefaultPolicy {
 	@Override
 	public CleanUpStatus getCleanUpStatus(RftTestSuiteRunner runner) {
 		int count = new Integer(getThreshold().get(PolicyType.FINISHED_TEST_NUMBER)).intValue();
-		System.out.println(runner.getFinishedTestsCount());
+		System.out.println("FinishTestNumberPolicy:"+runner.getFinishedTestsCount());
 		if(runner.getFinishedTestsCount() >= count){
 //			runner.resetFinishedTest();
 			return CleanUpStatus.ULTIMATE_CLEANUP;

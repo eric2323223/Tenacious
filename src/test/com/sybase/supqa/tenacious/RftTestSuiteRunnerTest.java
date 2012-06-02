@@ -13,6 +13,7 @@ import com.sybase.supqa.tenacious.policy.DefaultPolicy;
 import com.sybase.supqa.tenacious.policy.FinishTestNumberPolicy;
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
 import com.sybase.supqa.tenacious.policy.PolicyType;
+import com.sybase.supqa.tenacious.policy.TimePeriodPolicy;
 import com.sybase.supqa.tenacious.util.FileUtil;
 
 
@@ -30,16 +31,26 @@ public class RftTestSuiteRunnerTest {
 		runner = new RftTestSuiteRunner();
 		queue = new TestQueue(config.getDefaultTestQueue());
 		handler = new CleanupHandlerForTest();
-		policy = new DefaultPolicy();
 	}
 	
-	@Test public void shouldCompleteAllTests(){
-		assertEquals(2, queue.getTodoTests().size());
+	@Test 
+	public void shouldCompleteAllTests(){
+		policy = new DefaultPolicy();
+		assertEquals(12, queue.getTodoTests().size());
 		runner.runTestSuite(policy, queue, handler);
 		assertEquals(0, queue.getTodoTests().size());
 	}
 	
-	@Test public void shouldApplyPolicy(){
+//	@Test
+	public void shouldApplyTimePeriodPolicy(){
+		policy = new TimePeriodPolicy();
+		policy.addThreshold(PolicyType.TIME_PERIOD, "5");
+		runner.runTestSuite(policy, queue, handler);
+		assertEquals(0, queue.getTodoTests().size());
+	}
+	
+//	@Test 
+	public void shouldApplyPolicy(){
 		CleanupHandlerForTest mockHandler = mock(CleanupHandlerForTest.class);
 		policy = new FinishTestNumberPolicy();
 		policy.addThreshold(PolicyType.FINISHED_TEST_NUMBER, "3");
