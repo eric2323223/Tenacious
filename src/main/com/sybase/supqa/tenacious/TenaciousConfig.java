@@ -56,4 +56,8 @@ public class TenaciousConfig {
 		return helper.getProperty("STARTUP_FOLDER");
 	}
 
+	public String getDefaultTestQueue() {
+		return getTenaciousRootPath()+ File.separator+"testResults"+File.separator+"TestQueue";
+	}
+
 }

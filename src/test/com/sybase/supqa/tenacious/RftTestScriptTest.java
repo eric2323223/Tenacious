@@ -27,11 +27,26 @@ public class RftTestScriptTest {
 				"-playback testscript.workflow.screen.script1", script.buildRftPlaybackCommandString());
 	}
 	
-//	@Test 
-	public void shouldRunTest(){
+	@Test 
+	public void shouldRunPassTest(){
 		script = new RftTestScript("Test");
 		RftTestResult result = script.run();
 		assertEquals(true, result.isPass());
+	}
+	
+	@Test
+	public void shouldRunFailTest(){
+		script = new RftTestScript("Test3");
+		RftTestResult result = script.run();
+		assertEquals(false, result.isPass());
+		assertEquals("class java.lang.ClassNotFoundException", result.getException());
+	}
+	
+	@Test
+	public void shouldConvertToString(){
+		script = new RftTestScript("Test3");
+		RftTestResult result = script.run();
+		assertEquals("Test3\texception\tclass java.lang.ClassNotFoundException", script.toString());
 	}
 	
 }

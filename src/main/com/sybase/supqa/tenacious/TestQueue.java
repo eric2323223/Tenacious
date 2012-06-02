@@ -45,6 +45,7 @@ public class TestQueue {
 		for(int i=0;i<allTests.size();i++){
 			if(allTests.get(i).split("\t")[0].equals(script.getName())){
 				allTests.set(i, script.toString());
+				break;
 			}
 		}
 		persist();

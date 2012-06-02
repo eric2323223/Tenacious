@@ -1,31 +1,50 @@
 package com.sybase.supqa.tenacious;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sybase.supqa.tenacious.policy.DefaultPolicy;
+import com.sybase.supqa.tenacious.policy.FinishTestNumberPolicy;
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
+import com.sybase.supqa.tenacious.policy.PolicyType;
+import com.sybase.supqa.tenacious.util.FileUtil;
 
 
 public class RftTestSuiteRunnerTest {
 	private RftTestSuiteRunner runner;
+	private TestQueue queue;
+	private TenaciousConfig config = new TenaciousConfig();
+	private ICleanupHandler handler;
+	private IExecutionPolicy policy;
 
-	@Before public void setup(){
+	@Before public void setup() throws IOException{
+		String sourceFile = config.getTestFixureFolder()+File.separator+"TestQueue";
+		String destFile = config.getDefaultTestQueue();
+		FileUtil.copyFile(sourceFile, destFile);
 		runner = new RftTestSuiteRunner();
+		queue = new TestQueue(config.getDefaultTestQueue());
+		handler = new CleanupHandlerForTest();
+		policy = new DefaultPolicy();
+	}
+	
+	@Test public void shouldCompleteAllTests(){
+		assertEquals(2, queue.getTodoTests().size());
+		runner.runTestSuite(policy, queue, handler);
+		assertEquals(0, queue.getTodoTests().size());
 	}
 	
 	@Test public void shouldApplyPolicy(){
-//		IExecutionPolicy mockPolicy = mock(IExecutionPolicy.class);
-//		when(mockPolicy.getCleanUpStatus(runner)).thenReturn();
-//		
-//		ICleanupHandler handler = mock(ICleanupHandler.class);
-//		when()
-//		runner.runTestSuite(mockPolicy, queue, handler);
-//		verify(handler, times(5)).handle();
+		CleanupHandlerForTest mockHandler = mock(CleanupHandlerForTest.class);
+		policy = new FinishTestNumberPolicy();
+		policy.addThreshold(PolicyType.FINISHED_TEST_NUMBER, "3");
+		runner.runTestSuite(policy, queue, mockHandler);
+		verify(mockHandler, times(1)).ultimateCleanup();
 	}
 
 }

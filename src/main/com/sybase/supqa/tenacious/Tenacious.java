@@ -39,7 +39,7 @@ public class Tenacious {
 				queue.clear();
 				return;
 			}else{
-				handler.handle(policy, runner);
+				handler.ultimateCleanup();
 			}
 		}
 	}
@@ -78,7 +78,7 @@ public class Tenacious {
 	}
 	
 	private String startSupWorkspaceBatchCode() {
-		return "start /wait c:\\sybase\\unwiredflatform\\***.bat";
+		return "start /wait C:\\Sybase\\UnwiredPlatform\\Eclipse\\UnwiredWorkSpace.bat";
 	}
 
 	void generateLocalBatchFile(){

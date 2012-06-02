@@ -1,6 +1,7 @@
 package com.sybase.supqa.tenacious;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import com.sybase.supqa.tenacious.util.Cmd;
@@ -31,8 +32,28 @@ public class RftTestScript {
 	}
 
 	public RftTestResult run() {
-		Cmd.execute(buildRftPlaybackCommandString());
+//		FileWriter fw = null;
+//		File file = new File("c:\\tenacious_runscript.bat");
+//		try {
+//			fw = new FileWriter(file);
+//			fw.write(buildRftPlaybackCommandString());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally{
+//			if(fw!=null){
+//				try {
+//					fw.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		Cmd.execute("c:\\tenacious_runscript.bat");
+		
+		Cmd.execute("cmd /C start/wait "+buildRftPlaybackCommandString());
+		
 		result = new RftTestResult(logFileName);
+		this.setResult(result);
 		return result;
 	}
 

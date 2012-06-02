@@ -22,6 +22,7 @@ public class RftHtmlLogParser {
 	private Elements noteElements;
 	private Elements timeElements;
 	private Elements failElements;
+	private Elements listItemElements;
 	
 	private static final String[] MONTHS={"Jan", "Feb", "Mar", "Apr", "May", 
 		"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -32,6 +33,7 @@ public class RftHtmlLogParser {
 			noteElements = document.getElementsByClass("note");
 			timeElements = document.getElementsByClass("time");
 			failElements = document.getElementsByClass("fail");
+			listItemElements = document.getElementsByTag("LI");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -118,12 +120,10 @@ public class RftHtmlLogParser {
 	}
 
 	public String getException() {
-		for(int i=0;i<failElements.size();i++){
-			Element element = failElements.get(i);
-			Element timeElement = element.nextElementSibling();
-			Element noteElement = timeElement.nextElementSibling();
-			if(!noteElement.text().startsWith("Verification Point")){
-				return noteElement.text();
+		for(int i=0;i<listItemElements.size();i++){
+			Element listItem = listItemElements.get(i);
+			if(listItem.text().startsWith("exception_name =")){
+				return listItem.text().replace("exception_name = ", "");
 			}
 		}
 		return null;

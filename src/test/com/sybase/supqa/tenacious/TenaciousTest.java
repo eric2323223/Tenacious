@@ -27,21 +27,21 @@ public class TenaciousTest {
 	
 	@Test public void shouldInstall(){
 		tenacious.install();
-		File file1 = new File(config.getTenaciousRootPath()+File.separator+"teancious.bat");
-		assertEquals(true, file1.exists());
 		File file2 = new File(config.getWindowsStartupFolder()+File.separator+"tenacious.bat");
 		assertEquals(true, file2.exists());
+		File file1 = new File(config.getTenaciousRootPath()+File.separator+"teancious.bat");
+		assertEquals(true, file1.exists());
 	}
 	
 	@Test public void shouldrunTestsInTestQueueUntilResultNotChange(){
-//		tenacious.runTests();
+		
 	}
 	
 	@Test public void shouldGetJavaPath(){
 		String code = tenacious.generateTenaciousStartBatchCode();
 		assertEquals("\"C:\\Program Files\\IBM\\SDP\\jdk\\jre\\bin\\java.exe\" -cp " +
-				"\"C:\\Documents and Settings\\test\\Tenacious\\bin\";" +
-				"\"C:\\Documents and Settings\\test\\Tenacious\\lib\\*\" " +
+				"\"C:\\Documents and Settings\\eric\\workspace\\Tenacious\\bin\";" +
+				"\"C:\\Documents and Settings\\eric\\workspace\\Tenacious\\lib\\*\" " +
 				"com.sybase.supqa.tenacious.Tenacious", code);
 	}
 	

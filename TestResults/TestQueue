@@ -1,4 +1,8 @@
-test1	pass
-test2	fail	vp1,vp2
-test3	fail	vp1
-test4	exception	NullPointerException
+Test1	pass
+Test2	fail	vp1,vp2
+Test3	exception	class java.lang.ClassNotFoundException
+Test4	pass	
+Test5	exception	class java.lang.ClassNotFoundException
+Test6	exception	class java.lang.ClassNotFoundException
+Test7	pass	
+Test8	pass	

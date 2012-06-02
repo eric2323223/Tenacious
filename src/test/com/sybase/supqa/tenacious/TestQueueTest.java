@@ -3,6 +3,7 @@ package com.sybase.supqa.tenacious;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Before;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
+import com.sybase.supqa.tenacious.util.FileUtil;
 
 
 public class TestQueueTest {
@@ -18,10 +20,11 @@ public class TestQueueTest {
 	private TestQueue testQueue;
 	private TenaciousConfig config = new TenaciousConfig();
 
-	@Before public void setup(){
-		testQueue = new TestQueue(config.getTenaciousRootPath()+File.separator
-				+"src"+File.separator+"test"+File.separator+"fixture"+File.separator
-				+"TestQueue");
+	@Before public void setup() throws IOException{
+		String from = config.getTestFixureFolder()+File.separator+"TestQueue";
+		String to = config.getTenaciousRootPath()+File.separator+"testResults"+File.separator+"TestQueue";
+		FileUtil.copyFile(from, to);
+		testQueue = new TestQueue(to);
 	}
 	
 	@Test public void shouldGetAllTests(){

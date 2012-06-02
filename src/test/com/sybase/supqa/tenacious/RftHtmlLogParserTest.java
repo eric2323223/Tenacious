@@ -70,5 +70,11 @@ public class RftHtmlLogParserTest {
 	@Test public void shouldConvertMonth(){
 		assertEquals("05", parser.convertMonth("May"));
 	}
+	
+	@Test public void shouldGetExeption(){
+		String testLogFile = cfg.getTenaciousRootPath()+"\\src\\test\\fixture\\logWithException.html";
+		parser = new RftHtmlLogParser(testLogFile);
+		assertEquals("class java.lang.ClassNotFoundException", parser.getException());
+	}
 
 }
