@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sybase.supqa.tenacious.policy.DefaultPolicy;
+import com.sybase.supqa.tenacious.policy.ExceptionPolicy;
 import com.sybase.supqa.tenacious.policy.FinishTestNumberPolicy;
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
 import com.sybase.supqa.tenacious.policy.PolicyType;
@@ -34,7 +35,7 @@ public class RftTestSuiteRunnerTest {
 		handler = new CleanupHandlerForTest();
 	}
 	
-	@Test 
+//	@Test 
 	public void shouldCompleteAllTests(){
 		policy = new DefaultPolicy();
 		assertEquals(12, queue.getTodoTests().size());
@@ -42,7 +43,7 @@ public class RftTestSuiteRunnerTest {
 		assertEquals(0, queue.getTodoTests().size());
 	}
 	
-	@Test
+//	@Test
 	public void shouldApplyTimePeriodPolicy(){
 		policy = new TimePeriodPolicy();
 		policy.addThreshold(PolicyType.TIME_PERIOD, "2");
@@ -65,6 +66,14 @@ public class RftTestSuiteRunnerTest {
 		policy = new ResourceUsagePolicy();
 		policy.addThreshold(PolicyType.RESOURCE_CPU, "0.8000");
 		runner.runTestSuite(policy, queue, mockHandler);
+	}
+	
+	@Test
+	public void shouldApplyExceptionPolicy() throws IOException{
+		CleanupHandlerForTest handler = new CleanupHandlerForTest();
+		policy = new ExceptionPolicy();
+		policy.addThreshold("exceptionName", "java.lang.ClassNotFoundException");
+		runner.runTestSuite(policy, queue, handler);
 	}
 	
 }
