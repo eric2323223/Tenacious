@@ -1,6 +1,6 @@
 Test1	pass
 Test2	fail	vp1,vp2
-Test3	exception	NullPointerException
+Test3	exception	class java.lang.ClassNotFoundException
 Test4	exception	class java.lang.ClassNotFoundException
 Test5	exception	class java.lang.ClassNotFoundException
 Test6	exception	class java.lang.ClassNotFoundException

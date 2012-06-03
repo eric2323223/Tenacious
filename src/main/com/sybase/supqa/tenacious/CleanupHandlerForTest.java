@@ -18,11 +18,11 @@ public class CleanupHandlerForTest implements ICleanupHandler{
 	@Override
 	public void ultimateCleanup() {
 		System.out.println("======================Clean up the environment==================");
-		TenaciousConfig config = new TenaciousConfig();
-		Tenacious tenacious = new Tenacious(config);
-		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
-		PolicyConfig policyConfig = new PolicyConfig(config.getTenaciousPolicyConfigFile());
-		tenacious.runTests(testQueue, PolicyFactory.getPolicy(policyConfig));
+//		TenaciousConfig config = new TenaciousConfig();
+//		Tenacious tenacious = new Tenacious(config);
+//		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
+//		PolicyConfig policyConfig = new PolicyConfig(config.getTenaciousPolicyConfigFile());
+//		tenacious.runTests(testQueue, PolicyFactory.getPolicy(policyConfig));
 	}
 
 

@@ -13,6 +13,7 @@ import com.sybase.supqa.tenacious.policy.DefaultPolicy;
 import com.sybase.supqa.tenacious.policy.FinishTestNumberPolicy;
 import com.sybase.supqa.tenacious.policy.IExecutionPolicy;
 import com.sybase.supqa.tenacious.policy.PolicyType;
+import com.sybase.supqa.tenacious.policy.ResourceUsagePolicy;
 import com.sybase.supqa.tenacious.policy.TimePeriodPolicy;
 import com.sybase.supqa.tenacious.util.FileUtil;
 
@@ -41,21 +42,29 @@ public class RftTestSuiteRunnerTest {
 		assertEquals(0, queue.getTodoTests().size());
 	}
 	
-//	@Test
+	@Test
 	public void shouldApplyTimePeriodPolicy(){
 		policy = new TimePeriodPolicy();
-		policy.addThreshold(PolicyType.TIME_PERIOD, "5");
+		policy.addThreshold(PolicyType.TIME_PERIOD, "2");
 		runner.runTestSuite(policy, queue, handler);
 		assertEquals(0, queue.getTodoTests().size());
 	}
 	
 //	@Test 
-	public void shouldApplyPolicy(){
-		CleanupHandlerForTest mockHandler = mock(CleanupHandlerForTest.class);
+	public void shouldApplyFinishTestNumberPolicy(){
+		CleanupHandlerForTest mockHandler = new CleanupHandlerForTest();
 		policy = new FinishTestNumberPolicy();
 		policy.addThreshold(PolicyType.FINISHED_TEST_NUMBER, "3");
 		runner.runTestSuite(policy, queue, mockHandler);
-		verify(mockHandler, times(1)).ultimateCleanup();
+//		verify(mockHandler, times(1)).ultimateCleanup();
 	}
-
+	
+//	@Test
+	public void shouldApplyResourceUsagePolicy(){
+		CleanupHandlerForTest mockHandler = new CleanupHandlerForTest();
+		policy = new ResourceUsagePolicy();
+		policy.addThreshold(PolicyType.RESOURCE_CPU, "0.8000");
+		runner.runTestSuite(policy, queue, mockHandler);
+	}
+	
 }
