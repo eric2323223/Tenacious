@@ -48,6 +48,5 @@ public class TestQueueTest {
 		testQueue.updateTestStatus(script);
 		assertEquals(4, testQueue.getTodoTests().size());
 	}
-	
 
 }

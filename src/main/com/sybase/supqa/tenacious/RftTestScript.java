@@ -50,11 +50,23 @@ public class RftTestScript {
 //		}
 //		Cmd.execute("c:\\tenacious_runscript.bat");
 		
-		Cmd.execute(buildRftPlaybackCommandString());
 		
-		result = new RftTestResult(logFileName);
+		System.out.println("running test case "+name);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		TenaciousConfig config = new TenaciousConfig();
+		result = new RftTestResult(config.getTestFixureFolder()+File.separator+"logWithException.html");
 		this.setResult(result);
 		return result;
+		
+		
+//		Cmd.execute(buildRftPlaybackCommandString());
+//		result = new RftTestResult(logFileName);
+//		this.setResult(result);
+//		return result;
 	}
 
 	String buildRftPlaybackCommandString() {
