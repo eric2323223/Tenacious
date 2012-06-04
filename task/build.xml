@@ -1,0 +1,29 @@
+<project name="Tenacious" default="jar" basedir="./..">
+	<description>
+        simple example build file
+    </description>
+	<!-- set global properties for this build -->
+	<property name="build" location="bin"/>
+	<property name="lib" location="lib"/>
+	
+	<path id="classpath">
+	    <fileset dir="${lib}">
+	        <include name="*.jar"/>
+	    </fileset>
+	</path>
+	<manifestclasspath property="lib.list" jarfile="tenacious.jar">
+	    <classpath refid="classpath"/>
+	</manifestclasspath>
+	<target name="jar" >
+
+		<jar jarfile="tenacious.jar" >
+			<fileset dir="${build}" />
+			<fileset dir="${lib}" />
+			<manifest>
+				<attribute name="Main-Class" value="com.sybase.supqa.tenacious.Tenacious" />
+			    <attribute name="Class-Path" value="${lib.list}"/>
+			</manifest>
+		</jar>
+	</target>
+
+</project>
