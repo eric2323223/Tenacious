@@ -23,8 +23,8 @@ public class RftTestScript {
 	public RftTestScript(String name){
 		this.name = name;
 		String root = new TenaciousConfig().getSuptafLogRootPath();
-		String path = name.replace(".", "\\");
-		logFileName = root+File.separator+path+File.separator+"rational_ft_logframe.html";
+//		String path = name.replace(".", "\\");
+		logFileName = root+File.separator+name+File.separator+"rational_ft_logframe.html";
 	}
 	
 	public String getLogFileName(){

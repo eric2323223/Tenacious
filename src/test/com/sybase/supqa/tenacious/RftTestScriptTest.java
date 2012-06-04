@@ -49,4 +49,10 @@ public class RftTestScriptTest {
 		assertEquals("Test3\texception\tclass java.lang.ClassNotFoundException", script.toString());
 	}
 	
+	@Test
+	public void shouldGetCorrectLogfilePath(){
+		script = new RftTestScript("testscripts.featureName.Test3");
+		assertEquals("C:\\Documents and Settings\\eric\\IBM\\rationalsdp\\workspace\\UEP_ET_logs\\testscripts.featureName.Test3\\rational_ft_logframe.html", script.getLogFileName());
+	}
+	
 }

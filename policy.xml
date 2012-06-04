@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<policy class="com.sybase.supqa.tenacious.policy.TimePeriodPolicy">
-	<parameter name="timePeriod" value="10" />
-	<cleanupHandler class="com.sybase.supqa.tenacious.CleanupHandlerForTest" />
+<policy class="com.sybase.supqa.tenacious.policy.FinishTestNumberPolicy">
+	<parameter name="finishTestNumber" value="5" />
+	<cleanupHandler class="com.sybase.supqa.tenacious.HouseKeeper" />
 </policy>
