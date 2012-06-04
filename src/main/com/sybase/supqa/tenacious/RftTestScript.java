@@ -23,8 +23,8 @@ public class RftTestScript {
 	public RftTestScript(String name){
 		this.name = name;
 		String root = new TenaciousConfig().getSuptafLogRootPath();
-		String path = name.replace(".", "\\");
-		logFileName = root+File.separator+path+File.separator+"rational_ft_logframe.html";
+//		String path = name.replace(".", "\\");
+		logFileName = root+File.separator+name+File.separator+"rational_ft_logframe.html";
 	}
 	
 	public String getLogFileName(){
@@ -32,41 +32,21 @@ public class RftTestScript {
 	}
 
 	public RftTestResult run() {
-//		FileWriter fw = null;
-//		File file = new File("c:\\tenacious_runscript.bat");
+//		System.out.println("running test case "+name);
 //		try {
-//			fw = new FileWriter(file);
-//			fw.write(buildRftPlaybackCommandString());
-//		} catch (IOException e) {
+//			Thread.sleep(500);
+//		} catch (InterruptedException e) {
 //			e.printStackTrace();
-//		} finally{
-//			if(fw!=null){
-//				try {
-//					fw.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
 //		}
-//		Cmd.execute("c:\\tenacious_runscript.bat");
-		
-		
-		System.out.println("running test case "+name);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		TenaciousConfig config = new TenaciousConfig();
-		result = new RftTestResult(config.getTestFixureFolder()+File.separator+"logWithException.html");
-		this.setResult(result);
-		return result;
-		
-		
-//		Cmd.execute(buildRftPlaybackCommandString());
-//		result = new RftTestResult(logFileName);
+//		TenaciousConfig config = new TenaciousConfig();
+//		result = new RftTestResult(config.getTestFixureFolder()+File.separator+"logWithException.html");
 //		this.setResult(result);
 //		return result;
+		
+		Cmd.execute(buildRftPlaybackCommandString());
+		result = new RftTestResult(logFileName);
+		this.setResult(result);
+		return result;
 	}
 
 	String buildRftPlaybackCommandString() {

@@ -1,7 +1,8 @@
 Test1	pass
 Test2	fail	vp1,vp2
-Test3	exception	NullPointerException
+Test3	exception	class java.lang.ClassNotFoundException
 Test4	exception	class java.lang.ClassNotFoundException
+<<<<<<< HEAD
 Test5	exception	class java.lang.ClassNotFoundException
 Test6	exception	class java.lang.ClassNotFoundException
 Test7	exception	class java.lang.ClassNotFoundException
@@ -13,3 +14,5 @@ Test12	exception	class java.lang.ClassNotFoundException
 Test13	exception	class java.lang.ClassNotFoundException
 Test14
 Test15
+=======
+>>>>>>> afd23df44d4640ba21463d4eaf4611c7a25e11ca

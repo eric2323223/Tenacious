@@ -20,9 +20,10 @@ public class Tenacious {
 	public static void main(String[] args){
 		TenaciousConfig config = new TenaciousConfig();
 		Tenacious tenacious = new Tenacious(config);
-		if(tenacious.ifTenaciousInstalled()){
-			tenacious.generateStartupBatchFile();
-		}
+//		if(tenacious.ifTenaciousInstalled()){
+//			tenacious.generateStartupBatchFile();
+//		}
+		tenacious.install();
 		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
 		PolicyConfig policyConfig = new PolicyConfig(config.getTenaciousPolicyConfigFile());
 		tenacious.runTests(testQueue, PolicyFactory.getPolicy(policyConfig));
@@ -78,7 +79,8 @@ public class Tenacious {
 	}
 	
 	private String startSupWorkspaceBatchCode() {
-		return "start /wait C:\\Sybase\\UnwiredPlatform\\Eclipse\\UnwiredWorkSpace.bat";
+		return "start /B C:\\Sybase\\UnwiredPlatform\\Eclipse\\UnwiredWorkSpace.bat\n" +
+				"ping -n 180 127.0.0.1 >null\n" +generateTenaciousStartBatchCode();
 	}
 
 	void generateLocalBatchFile(){
