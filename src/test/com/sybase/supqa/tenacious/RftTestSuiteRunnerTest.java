@@ -70,10 +70,11 @@ public class RftTestSuiteRunnerTest {
 	
 	@Test
 	public void shouldApplyExceptionPolicy() throws IOException{
-		CleanupHandlerForTest handler = new CleanupHandlerForTest();
+		ICleanupHandler handler = mock(ICleanupHandler.class);
 		policy = new ExceptionPolicy();
 		policy.addThreshold("exceptionName", "java.lang.ClassNotFoundException");
 		runner.runTestSuite(policy, queue, handler);
+		verify(handler, times(15)).advancedCleanup();
 	}
 	
 }

@@ -11,5 +11,5 @@ Test10	exception	class java.lang.ClassNotFoundException
 Test11	exception	class java.lang.ClassNotFoundException
 Test12	exception	class java.lang.ClassNotFoundException
 Test13	exception	class java.lang.ClassNotFoundException
-Test14	exception	class java.lang.ClassNotFoundException
-Test15	exception	class java.lang.ClassNotFoundException
+Test14
+Test15
