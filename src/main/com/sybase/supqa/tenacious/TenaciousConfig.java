@@ -1,6 +1,8 @@
 package com.sybase.supqa.tenacious;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sybase.supqa.tenacious.util.PropertiesFileHelper;
 
@@ -58,6 +60,23 @@ public class TenaciousConfig {
 
 	public String getDefaultTestQueue() {
 		return getTenaciousRootPath()+ File.separator+"testResults"+File.separator+"TestQueue";
+	}
+	
+	public List<String> getTestScriptsInFolder(String path){
+		List<String> testScripts = new ArrayList<String>();
+		String fullPath = getSuptafRootPath()+File.separator+path;
+		File folder = new File(fullPath);
+		if(folder.exists() && folder.isDirectory()){
+			String[] allFiles = folder.list();
+			for(String file:allFiles){
+				if(file.endsWith(".testsuite")){
+					if(!file.toLowerCase().contains("all.testsuite")){
+						testScripts.add(file.replace(".testsuite", ""));
+					}
+				}
+			}
+		}
+		return testScripts;
 	}
 
 }

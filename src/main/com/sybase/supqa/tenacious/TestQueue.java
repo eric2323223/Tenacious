@@ -5,8 +5,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TestQueue {
@@ -15,7 +17,7 @@ public class TestQueue {
 	
 	public TestQueue(String fileName){
 		this.testQueueFile = new File(fileName);
-		loadTests();
+//		loadTests();
 	}
 	
 	public List<String> getTodoTests(){
@@ -30,7 +32,6 @@ public class TestQueue {
 	}
 
 	public List<String> getDoneTests(){
-		loadTests();
 		loadTests();
 		List<String> doneTests = new ArrayList<String>();
 		for(String test:allTests){
@@ -77,7 +78,12 @@ public class TestQueue {
 				br = new BufferedReader(new FileReader(this.testQueueFile));
 				String test;
 				while((test=br.readLine())!=null){
-					allTests.add(test);
+					if(test.contains("[") && test.contains("]")){
+						loadMatchTests(test);
+					}else{
+						allTests.add(test);
+					}
+					persist();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -89,6 +95,75 @@ public class TestQueue {
 				}
 			}
 		}
+	}
+
+	private void loadMatchTests(String test) {
+		String newTest = test.replace("[", "").replace("]", "");
+		List<String> tests = getMatchTests(newTest);
+		allTests.remove(test);
+		for(String t:tests){
+			allTests.add(t);
+		}
+	}
+
+	//[testscript.codegen.script.*]
+	//[testscript.codegen.script.mbo*]
+	//[testscript.codegen.script.*-E2E]
+	List<String> getMatchTests(String test) {
+		TenaciousConfig config = new TenaciousConfig();
+		List<String> tests = new ArrayList<String>();
+		String folder = getFeatureFolder(test);
+		String matchPattern = getMatchPattern(test);
+		List<String> allTestsInFolder = config.getTestScriptsInFolder(folder);
+		for(String t:allTestsInFolder){
+			if(match(t, matchPattern)){
+				tests.add(buildTestScriptName(folder, t));
+			}
+		}
+		return tests;
+	}
+
+	private String buildTestScriptName(String folder, String t) {
+		return folder.replace("\\", ".")+"."+t;
+	}
+
+	boolean match(String t, String matchPattern) {
+		if(matchPattern.contains("*")){
+			if(matchPattern.equals("*")){
+				return true;
+			}else{
+				if(matchPattern.endsWith("*")){
+					String pattern = matchPattern.replace("*", "");
+					if(t.startsWith(pattern)){
+						return true;
+					}
+				}
+				if(matchPattern.startsWith("*")){
+					String pattern = matchPattern.replace("*", "");
+					if(t.endsWith(pattern)){
+						return true;
+					}
+				}
+				if(matchPattern.contains("*-")){
+					String pattern = matchPattern.substring(0, matchPattern.indexOf("*-"));
+					String excludePattern = matchPattern.substring(matchPattern.indexOf("*-")+2);
+					if(t.startsWith(pattern) && !t.contains(excludePattern)){
+						return true;
+					}
+				}
+			}
+			return false;
+		}else{
+			throw new RuntimeException("Unrecognized match pattern: "+matchPattern);
+		}
+	}
+
+	String getMatchPattern(String text) {
+		return text.substring(text.lastIndexOf(".")+1);
+	}
+
+	String getFeatureFolder(String text) {
+		return text.substring(0, text.lastIndexOf(".")).replace(".", "\\");
 	}
 
 	private boolean isLoaded() {
