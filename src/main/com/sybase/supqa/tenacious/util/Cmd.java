@@ -10,38 +10,40 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class Cmd {
-	private static final ExecutorService THREAD_POOL 
-    = Executors.newCachedThreadPool();
+	private static final ExecutorService THREAD_POOL = Executors
+			.newCachedThreadPool();
 
-private static <T> T timedCall(Callable<T> c, long timeout, TimeUnit timeUnit)
-    throws InterruptedException, ExecutionException, TimeoutException
-{
-    FutureTask<T> task = new FutureTask<T>(c);
-    THREAD_POOL.execute(task);
-    return task.get(timeout, timeUnit);
+	private static <T> T timedCall(Callable<T> c, long timeout,
+			TimeUnit timeUnit) throws InterruptedException, ExecutionException,
+			TimeoutException {
+		FutureTask<T> task = new FutureTask<T>(c);
+		THREAD_POOL.execute(task);
+		return task.get(timeout, timeUnit);
+	}
+
+	public static int executeCommandLine(String command, int timeout){
+		try {
+		    int returnCode = timedCall(new Callable<int>() {
+		    	@Override
+		        public int call() throws Exception
+		        {
+		            java.lang.Process process = Runtime.getRuntime().exec(command); 
+		            return process.waitFor();
+		        }
+	        }, timeout, TimeUnit.SECONDS);
+		} catch (TimeoutException e) {
+		    // Handle timeout here
+		}
 }
 
-try {
-    int returnCode = timedCall(new Callable<int>() {
-        public int call() throws Exception
-        {
-            java.lang.Process process = Runtime.getRuntime().exec(command); 
-            return process.waitFor();
-        }, timeout, TimeUnit.SECONDS);
-} }catch (TimeoutException e) {
-    // Handle timeout here
-}
-	
-	
-	public static void execute(String command){
+	public static void execute(String command) {
 		Process p;
 		try {
 			p = Runtime.getRuntime().exec(command);
 			p.waitFor();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
