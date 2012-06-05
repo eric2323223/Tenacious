@@ -3,6 +3,7 @@ package com.sybase.supqa.tenacious;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 import com.sybase.supqa.tenacious.util.Cmd;
 import com.sybase.supqa.tenacious.util.StringUtil;
@@ -43,8 +44,15 @@ public class RftTestScript {
 //		this.setResult(result);
 //		return result;
 		
-		Cmd.execute(buildRftPlaybackCommandString());
-		result = new RftTestResult(logFileName);
+//		Cmd.execute(buildRftPlaybackCommandString());
+		try {
+			Cmd.executeCommandLine(buildRftPlaybackCommandString(), 600);
+			result = new RftTestResult(logFileName);
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+			result = new RftTestResult();
+			result.setException(e.getClass().getName());
+		}
 		this.setResult(result);
 		return result;
 	}

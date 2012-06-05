@@ -5,10 +5,10 @@ import java.util.List;
 import org.joda.time.Period;
 
 public class RftTestResult {
-	private final String rftLogFile;
-	private final Period executePeriod;
-	private final List<String> failedVerificationPoints;
-	private final String exception;
+	private String rftLogFile;
+	private Period executePeriod;
+	private List<String> failedVerificationPoints;
+	private String exception;
 	
 	public RftTestResult(String file) {
 		this.rftLogFile = file;
@@ -18,6 +18,12 @@ public class RftTestResult {
 		exception = parser.getException();
 	}
 	
+	public RftTestResult() {}
+	
+	public void setException(String exp){
+		this.exception = exp;
+	}
+
 	public boolean isPass() {
 		return exception==null && failedVerificationPoints.size()==0;
 	}

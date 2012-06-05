@@ -10,29 +10,30 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class Cmd {
-	private static final ExecutorService THREAD_POOL = Executors
-			.newCachedThreadPool();
+	private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
-	private static <T> T timedCall(Callable<T> c, long timeout,
-			TimeUnit timeUnit) throws InterruptedException, ExecutionException,
-			TimeoutException {
-		FutureTask<T> task = new FutureTask<T>(c);
+	private static <T> T timedCall(Callable<T> callable, long timeout,	TimeUnit timeUnit) 
+			throws InterruptedException, ExecutionException, TimeoutException 
+	{
+		FutureTask<T> task = new FutureTask<T>(callable);
 		THREAD_POOL.execute(task);
 		return task.get(timeout, timeUnit);
 	}
 
-	public static int executeCommandLine(String command, int timeout){
+	public static void executeCommandLine(final String command, int timeout) throws TimeoutException{
 		try {
-		    int returnCode = timedCall(new Callable<int>() {
+		    timedCall(new Callable<Integer>() {
 		    	@Override
-		        public int call() throws Exception
+		        public Integer call() throws Exception
 		        {
 		            java.lang.Process process = Runtime.getRuntime().exec(command); 
-		            return process.waitFor();
+		            return new Integer(process.waitFor());
 		        }
 	        }, timeout, TimeUnit.SECONDS);
-		} catch (TimeoutException e) {
-		    // Handle timeout here
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		}
 }
 
@@ -47,5 +48,9 @@ public class Cmd {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static void main(String [] args) throws TimeoutException{
+		Cmd.executeCommandLine("sleep 2", 3);
+	}
+	
 }
