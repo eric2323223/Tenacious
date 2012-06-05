@@ -12,7 +12,7 @@ public class FinishTestNumberPolicy extends DefaultPolicy {
 			System.out.println("FinishTestNumerPolicy");
 			return CleanupStatus.ULTIMATE_CLEANUP;
 		}
-		return CleanupStatus.NO_NEED_CLEANUP;
+		return super.getCleanUpStatus(runner);
 	}
 
 }

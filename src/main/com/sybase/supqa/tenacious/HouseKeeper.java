@@ -5,7 +5,13 @@ import com.sybase.supqa.tenacious.util.Cmd;
 public class HouseKeeper implements ICleanupHandler {
 
 	public void basicCleanup() {
-		System.out.println("restarting ET and RFT...");
+		RftTestScript script = new RftTestScript("testscript.Auxiliary.CleanUp");
+		script.run();
+		closeIE();
+	}
+
+	private void closeIE() {
+		Cmd.execute("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
 	}
 
 	public void advancedCleanup() {

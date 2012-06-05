@@ -10,7 +10,7 @@ public class DefaultPolicy implements IExecutionPolicy {
 
 	@Override
 	public CleanupStatus getCleanUpStatus(RftTestSuiteRunner runner) {
-		return CleanupStatus.NO_NEED_CLEANUP;
+		return CleanupStatus.BASIC_CLEANUP;
 	}
 
 	@Override
