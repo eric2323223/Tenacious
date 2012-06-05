@@ -8,9 +8,9 @@ import com.sybase.supqa.tenacious.util.Cmd;
 import com.sybase.supqa.tenacious.util.StringUtil;
 
 public class RftTestScript {
-	private final String name;
+	protected final String name;
 	private final String logFileName;
-	private RftTestResult result;
+	protected RftTestResult result;
 	
 	public String getName() {
 		return name;

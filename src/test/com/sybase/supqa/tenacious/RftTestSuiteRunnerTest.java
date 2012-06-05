@@ -76,4 +76,25 @@ public class RftTestSuiteRunnerTest {
 		runner.runTestSuite(policy, queue, handler);
 	}
 	
+	class MockScript extends RftTestScript{
+
+		public MockScript(String name) {
+			super(name);
+		}
+		
+		public RftTestResult run(){
+			System.out.println("running test case "+name);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			TenaciousConfig config = new TenaciousConfig();
+			result = new RftTestResult(config.getTestFixureFolder()+File.separator+"logWithException.html");
+			this.setResult(result);
+			return result;
+		}
+		
+	}
+	
 }
