@@ -17,7 +17,7 @@ public class TestQueue {
 	
 	public TestQueue(String fileName){
 		this.testQueueFile = new File(fileName);
-//		loadTests();
+		loadTests();
 	}
 	
 	public List<String> getTodoTests(){
@@ -81,10 +81,12 @@ public class TestQueue {
 					if(test.contains("[") && test.contains("]")){
 						loadMatchTests(test);
 					}else{
-						allTests.add(test);
+						if(!test.trim().equals("")){
+							allTests.add(test);
+						}
 					}
-					persist();
 				}
+				persist();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
