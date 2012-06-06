@@ -116,7 +116,7 @@ public class Tenacious {
 			File.pathSeparator+StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"lib\\*");
 		String mainClass = "com.sybase.supqa.tenacious.Tenacious";
 		String log = StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"tenacious.log");
-		return javaPath+ " "+ classPath + " "+mainClass+" > "+log;
+		return javaPath+ " "+ classPath + " "+mainClass+" >> "+log;
 	}
 
 	public static String getJavaPath() {

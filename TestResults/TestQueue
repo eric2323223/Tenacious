@@ -1,19 +1,19 @@
 testscript.Workflow.Keys.Action_ParameterMapping	exception	java.util.concurrent.TimeoutException
-testscript.Workflow.Keys.ActivationKey_1	pass	
-testscript.Workflow.Keys.ActivationKey_2	exception	java.util.concurrent.TimeoutException
-testscript.Workflow.Keys.CredCacheKey_1	pass	
-testscript.Workflow.Keys.CredCacheKey_2	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.EnhancedKey_HardCodedValue_DT	exception	java.util.concurrent.TimeoutException
-testscript.Workflow.Keys.OutputKeys	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.Parameter_keys_Mapping	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.PKMapping_ADE_FT	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.PKMapping_list_Tooling	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.PKMapping_ReStartEclipse	exception	java.lang.NoClassDefFoundError
-testscript.Workflow.Keys.PKMapping_TransRule_Extract_FT	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.PK_List_Tooling	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.SCP_NewKey_Restart	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.SISP_ExtractionRule_ADE	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.SISP_Keys	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.SISP_ParameterMapping	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.SISP_PKMapping	exception	java.lang.NullPointerException
-testscript.Workflow.Keys.SP_NewKey_Restart	exception	com.rational.test.ft.WindowActivateFailedException
+testscript.Workflow.Keys.ActivationKey_1	exception	com.rational.test.ft.WindowActivateFailedException
+testscript.Workflow.Keys.ActivationKey_2
+testscript.Workflow.Keys.CredCacheKey_1
+testscript.Workflow.Keys.CredCacheKey_2
+testscript.Workflow.Keys.EnhancedKey_HardCodedValue_DT
+testscript.Workflow.Keys.OutputKeys
+testscript.Workflow.Keys.Parameter_keys_Mapping
+testscript.Workflow.Keys.PKMapping_ADE_FT
+testscript.Workflow.Keys.PKMapping_list_Tooling
+testscript.Workflow.Keys.PKMapping_ReStartEclipse
+testscript.Workflow.Keys.PKMapping_TransRule_Extract_FT
+testscript.Workflow.Keys.PK_List_Tooling
+testscript.Workflow.Keys.SCP_NewKey_Restart
+testscript.Workflow.Keys.SISP_ExtractionRule_ADE
+testscript.Workflow.Keys.SISP_Keys
+testscript.Workflow.Keys.SISP_ParameterMapping
+testscript.Workflow.Keys.SISP_PKMapping
+testscript.Workflow.Keys.SP_NewKey_Restart

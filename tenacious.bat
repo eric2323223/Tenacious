@@ -1,1 +1,1 @@
-"C:\Program Files\IBM\SDP\jdk\jre\bin\java.exe" -cp "C:\Documents and Settings\eric\workspace\Tenacious\bin";"C:\Documents and Settings\eric\workspace\Tenacious\lib\*" com.sybase.supqa.tenacious.Tenacious > "c:\C:\Documents and Settings\eric\workspace\Tenacious\tenacious.log"
+"C:\Program Files\IBM\SDP\jdk\jre\bin\java.exe" -cp "C:\Documents and Settings\eric\workspace\Tenacious\bin";"C:\Documents and Settings\eric\workspace\Tenacious\lib\*" com.sybase.supqa.tenacious.Tenacious >> "C:\Documents and Settings\eric\workspace\Tenacious\tenacious.log"
