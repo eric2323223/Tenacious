@@ -32,7 +32,7 @@ public class RftTestScript {
 		return logFileName;
 	}
 
-	public RftTestResult run() {
+	public RftTestResult run2() {
 //		System.out.println("running test case "+name);
 //		try {
 //			Thread.sleep(500);
@@ -56,6 +56,37 @@ public class RftTestScript {
 		this.setResult(result);
 		return result;
 	}
+	
+	public RftTestResult run(int timeout) {
+		try {
+			Cmd.executeCommandLine(buildRftPlaybackCommandString(), timeout);
+			result = new RftTestResult(logFileName);
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+			result = new RftTestResult();
+			result.setException(e.getClass().getName());
+		}
+		this.setResult(result);
+		return result;
+	}
+	
+	public RftTestResult run() {
+		TenaciousConfig config = new TenaciousConfig();
+		try {
+			Cmd.executeCommandLine(buildRftPlaybackCommandString(), config.getTimeoutOfTestExecution()*1000);
+			result = new RftTestResult(logFileName);
+		} catch (TimeoutException e) {
+//			e.printStackTrace();
+			result = new RftTestResult();
+			result.setException(e.getClass().getName());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.setResult(result);
+		return result;
+	}
 
 	String buildRftPlaybackCommandString() {
 		TenaciousConfig config = new TenaciousConfig();
@@ -70,13 +101,9 @@ public class RftTestScript {
 	}
 	
 	public static void main(String[] args) throws IOException{
-		Runtime.getRuntime().exec("\"C:\\Program Files\\IBM\\SDP\\jdk\\jre\\bin\\java.exe\" " +
-				"-classpath \"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET\";\"C:\\Program Files\\IBM\\SDP\\FunctionalTester\\bin\\rational_ft.jar\";\"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET_log\\lib\\*\" " +
-				"com.rational.test.ft.rational_ft " +
-				"-datastore \"C:\\Documents and Settings\\test\\IBM\\rationalsdp\\workspace\\UEP_ET\" " +
-				"-rt.bring_up_logviewer false "+
-				"-playback Test");
-		System.out.println("done");
+		RftTestScript script = new RftTestScript("testscript.Workflow.Keys.Action_ParameterMapping");
+		script.run();
+		System.out.println(script.getResult().getException());
 	}
 	
 	public String toString(){

@@ -79,4 +79,9 @@ public class TenaciousConfig {
 		return testScripts;
 	}
 
+	public long getTimeoutOfTestExecution() {
+		return new Long(helper.getProperty("TIMEOUT_TEST_EXECUTION")).longValue();
+	}
+
+
 }
