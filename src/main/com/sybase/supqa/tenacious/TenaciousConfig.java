@@ -83,5 +83,9 @@ public class TenaciousConfig {
 		return new Long(helper.getProperty("TIMEOUT_TEST_EXECUTION")).longValue();
 	}
 
+	public String getIbmSharedLibPath() {
+		return helper.getProperty("IBM_SHARED_LIB");
+	}
+
 
 }

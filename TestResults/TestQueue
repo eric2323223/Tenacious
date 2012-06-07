@@ -1,10 +1,10 @@
-testscript.Workflow.Keys.Action_ParameterMapping	exception	java.util.concurrent.TimeoutException
-testscript.Workflow.Keys.ActivationKey_1	exception	com.rational.test.ft.WindowActivateFailedException
+testscript.Workflow.Keys.Action_ParameterMapping
+testscript.Workflow.Keys.ActivationKey_1
 testscript.Workflow.Keys.ActivationKey_2
-testscript.Workflow.Keys.CredCacheKey_1
-testscript.Workflow.Keys.CredCacheKey_2
-testscript.Workflow.Keys.EnhancedKey_HardCodedValue_DT
-testscript.Workflow.Keys.OutputKeys
+testscript.Workflow.Keys.CredCacheKey_1	pass	
+testscript.Workflow.Keys.CredCacheKey_2	pass	
+testscript.Workflow.Keys.EnhancedKey_HardCodedValue_DT	pass	
+testscript.Workflow.Keys.OutputKeys	exception
 testscript.Workflow.Keys.Parameter_keys_Mapping
 testscript.Workflow.Keys.PKMapping_ADE_FT
 testscript.Workflow.Keys.PKMapping_list_Tooling

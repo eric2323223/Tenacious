@@ -73,6 +73,7 @@ public class RftTestScript {
 	public RftTestResult run() {
 		TenaciousConfig config = new TenaciousConfig();
 		try {
+			System.out.println("run script "+name);
 			Cmd.executeCommandLine(buildRftPlaybackCommandString(), config.getTimeoutOfTestExecution()*1000);
 			result = new RftTestResult(logFileName);
 		} catch (TimeoutException e) {
@@ -87,22 +88,46 @@ public class RftTestScript {
 		this.setResult(result);
 		return result;
 	}
+	
+	public RftTestResult run3(){
+		Cmd.executeWithoutWait(buildRftPlaybackCommandString());
+		while(!isTestComplete()){
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		closeIE();
+		result = new RftTestResult(logFileName);
+		return result;
+	}
+	
+	boolean isTestComplete(){
+		return Cmd.getOutput("tasklist | findstr \"IEXPLORE\"").trim().length()>0;
+	}
+	
+	void closeIE(){
+		Cmd.execute("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
+	}
 
 	String buildRftPlaybackCommandString() {
 		TenaciousConfig config = new TenaciousConfig();
 		String rftFtJar = StringUtil.quote(config.getRftFtJar());
 		String suptafRoot = StringUtil.quote(config.getSuptafRootPath());
 		String suptafLib = StringUtil.quote(config.getSuptafRootPath()+"\\lib\\*");
+		String ibmSharedLib = StringUtil.quote(config.getIbmSharedLibPath()+"\\*");
 		String mainClass = "com.rational.test.ft.rational_ft";
 		String jre = Tenacious.getJavaPath();
 		
-		return jre+" -classpath "+suptafRoot+File.pathSeparator+rftFtJar+File.pathSeparator+suptafLib+ 
+		return jre+" -classpath "+suptafRoot+File.pathSeparator+rftFtJar+
+			File.pathSeparator+suptafLib+ 
 			" "+mainClass+" -datastore "+suptafRoot+" -playback "+this.name;
 	}
 	
 	public static void main(String[] args) throws IOException{
 		RftTestScript script = new RftTestScript("testscript.Workflow.Keys.Action_ParameterMapping");
-		script.run();
+		script.run3();
 		System.out.println(script.getResult().getException());
 	}
 	

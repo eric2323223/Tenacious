@@ -1,6 +1,9 @@
 package com.sybase.supqa.tenacious.util;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -8,6 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import com.sybase.supqa.tenacious.TenaciousConfig;
 
 public class Cmd {
 	private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
@@ -89,11 +94,43 @@ public class Cmd {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		} 
+	}
+	
+	public static String getOutput(String command){
+		Process p;
+		String output="";
+		try {
+			p = Runtime.getRuntime().exec(command);
+			p.waitFor();
+			BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream())); 
+			String line=reader.readLine(); 
+			while(line!=null) 
+			{ 
+				output = output+line+"\n";
+				line=reader.readLine(); 
+			} 
+			return output;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("oops");
+		} 
 	}
 	
 	public static void main(String [] args) throws TimeoutException{
-		Cmd.executeCommandLine("sleep 2", 3);
+		System.out.println(Cmd.getOutput("cmd /c tasklist"));
+		
+//		TenaciousConfig config = new TenaciousConfig();
+//		Cmd.execute(FileUtil.readFile(config.getTenaciousRootPath()+File.separator+"runScript.bat"));
+	}
+
+	public static void executeWithoutWait(String command) {
+		try {
+			Runtime.getRuntime().exec(command);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
