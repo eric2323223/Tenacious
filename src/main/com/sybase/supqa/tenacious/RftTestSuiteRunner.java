@@ -22,7 +22,7 @@ public class RftTestSuiteRunner {
 	public void runTestSuite(final IExecutionPolicy policy, TestQueue queue, final ICleanupHandler handler){
 		while(queue.getTodoTests().size()>0){
 			RftTestScript script = new RftTestScript(queue.getTodoTests().get(0));
-			currentTestResult = script.run();
+			currentTestResult = script.run3();
 			finishedTests.add(script);
 			queue.updateTestStatus(script);
 			CleanupStatus cleanupStatus = policy.getCleanUpStatus(this);

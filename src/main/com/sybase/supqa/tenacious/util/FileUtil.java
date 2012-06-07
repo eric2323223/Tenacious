@@ -1,8 +1,11 @@
 package com.sybase.supqa.tenacious.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
@@ -28,6 +31,22 @@ public class FileUtil {
 	            destination.close();
 	        }
 	    }
+	}
+	
+	public static String readFile(String fileName){
+		try {
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			String content="";
+			String line;
+			while((line = br.readLine())!=null){
+				content = content+line;
+			}
+			return content;
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("oops");
+		}
 	}
 
 }

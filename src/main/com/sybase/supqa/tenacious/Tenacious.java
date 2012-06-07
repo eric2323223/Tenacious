@@ -80,7 +80,8 @@ public class Tenacious {
 	
 	private String startSupWorkspaceBatchCode() {
 		return "start /B C:\\Sybase\\UnwiredPlatform\\Eclipse\\UnwiredWorkSpace.bat\n" +
-				"ping -n 180 127.0.0.1 >null\n" +generateTenaciousStartBatchCode();
+				"ping -n 180 127.0.0.1 >null\n" 
+				+generateTenaciousStartBatchCode();
 	}
 
 	void generateLocalBatchFile(){
@@ -114,7 +115,8 @@ public class Tenacious {
 		String classPath = "-cp "+StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"bin")+
 			File.pathSeparator+StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"lib\\*");
 		String mainClass = "com.sybase.supqa.tenacious.Tenacious";
-		return javaPath+ " "+ classPath + " "+mainClass;
+		String log = StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"tenacious.log");
+		return javaPath+ " "+ classPath + " "+mainClass+" >> "+log;
 	}
 
 	public static String getJavaPath() {

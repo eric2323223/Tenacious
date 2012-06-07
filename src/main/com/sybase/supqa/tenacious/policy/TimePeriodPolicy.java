@@ -17,7 +17,7 @@ public class TimePeriodPolicy extends DefaultPolicy {
 			runner.resetStartTime();
 			return CleanupStatus.ULTIMATE_CLEANUP;
 		}else{
-			return CleanupStatus.NO_NEED_CLEANUP;
+			return super.getCleanUpStatus(runner);
 		}
 	}
 
