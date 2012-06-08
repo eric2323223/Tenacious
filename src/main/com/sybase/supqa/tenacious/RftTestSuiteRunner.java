@@ -11,6 +11,7 @@ import com.sybase.supqa.tenacious.policy.PolicyConfig;
 import com.sybase.supqa.tenacious.policy.PolicyFactory;
 import com.sybase.supqa.tenacious.policy.PolicyType;
 import com.sybase.supqa.tenacious.policy.TimePeriodPolicy;
+import com.sybase.supqa.tenacious.util.Cmd;
 
 public class RftTestSuiteRunner {
 	private List<RftTestScript> finishedTests = new ArrayList<RftTestScript>();
@@ -20,6 +21,7 @@ public class RftTestSuiteRunner {
 	private long start = new Date().getTime();
 	
 	public void runTestSuite(final IExecutionPolicy policy, TestQueue queue, final ICleanupHandler handler){
+		Cmd.closeIE();
 		while(queue.getTodoTests().size()>0){
 			RftTestScript script = new RftTestScript(queue.getTodoTests().get(0));
 			currentTestResult = script.run3();

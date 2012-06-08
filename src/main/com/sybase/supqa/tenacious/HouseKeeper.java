@@ -7,12 +7,8 @@ public class HouseKeeper implements ICleanupHandler {
 	public void basicCleanup() {
 		System.out.println("basic recovery...");
 		RftTestScript script = new RftTestScript("testscript.Auxiliary.CleanUp");
-		script.run();
-		closeIE();
-	}
-
-	private void closeIE() {
-		Cmd.execute("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
+		script.run3();
+		Cmd.closeIE();
 	}
 
 	public void advancedCleanup() {

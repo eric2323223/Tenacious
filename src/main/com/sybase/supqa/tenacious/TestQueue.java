@@ -25,7 +25,11 @@ public class TestQueue {
 		List<String> todoTests = new ArrayList<String>();
 		for(String test:allTests){
 			if(isTodoTest(test)){
-				todoTests.add(test);
+				if(test.split("\t").length>1){
+					todoTests.add(test.split("\t")[0]);
+				}else{
+					todoTests.add(test);
+				}
 			}
 		}
 		return todoTests;
@@ -44,6 +48,10 @@ public class TestQueue {
 	
 	public void updateTestStatus(RftTestScript script){
 		for(int i=0;i<allTests.size();i++){
+			if(script.toString().equals(allTests.get(i))){
+				allTests.set(i, "*"+script.toString());
+				break;
+			}
 			if(allTests.get(i).split("\t")[0].equals(script.getName())){
 				allTests.set(i, script.toString());
 				break;
@@ -173,7 +181,17 @@ public class TestQueue {
 	}
 
 	private boolean isTodoTest(String test) {
-		return test.split("\t").length>1?false:true;
+		test = test.trim();
+		if(test.startsWith("*")){
+			return false;
+		}
+		if(test.split("\t").length>1 && test.split("\t")[1].equals("pass")){
+			return false;
+		}
+		if(test.split("\t").length==3 && test.split("\t")[1].equals("fail")){
+			return false;
+		}
+		return true;
 	}
 
 	public void clear() {

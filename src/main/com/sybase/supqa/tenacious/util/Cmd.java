@@ -114,7 +114,7 @@ public class Cmd {
 	}
 	
 	public static void main(String [] args) throws IOException{
-		System.out.println(Cmd.getOutput("cmd /c tasklist | findstr \"chrome\""));
+		System.out.println(Cmd.getOutput("cmd /c tasklist | findstr \"IEXPLORE\""));
 		
 //		TenaciousConfig config = new TenaciousConfig();
 //		Cmd.execute(FileUtil.readFile(config.getTenaciousRootPath()+File.separator+"runScript.bat"));
@@ -126,6 +126,10 @@ public class Cmd {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void closeIE() {
+		Cmd.execute("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
 	}
 	
 }

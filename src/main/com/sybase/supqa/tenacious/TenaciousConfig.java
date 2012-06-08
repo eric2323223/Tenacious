@@ -34,6 +34,10 @@ public class TenaciousConfig {
 		return getTenaciousRootPath()+File.separator+"TestResults"+File.separator+"TestQueue";
 	}
 	
+	public String getTenaciousBrokenTestsFile() {
+		return getTenaciousRootPath()+File.separator+"TestResults"+File.separator+"BrokenTests";
+	}
+	
 	public String getSuptafRootPath(){
 		return helper.getProperty("SUPTAF_ROOT_PATH");
 	}

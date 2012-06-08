@@ -20,11 +20,9 @@ public class Tenacious {
 	public static void main(String[] args){
 		TenaciousConfig config = new TenaciousConfig();
 		Tenacious tenacious = new Tenacious(config);
-//		if(tenacious.ifTenaciousInstalled()){
-//			tenacious.generateStartupBatchFile();
-//		}
 		tenacious.install();
 		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
+//		BrokenTests brokenTests = new BrokenTests(config.getTenaciousBrokenTestsFile());
 		PolicyConfig policyConfig = new PolicyConfig(config.getTenaciousPolicyConfigFile());
 		tenacious.runTests(testQueue, PolicyFactory.getPolicy(policyConfig));
 	}
@@ -45,15 +43,6 @@ public class Tenacious {
 		}
 	}
 	
-	private boolean ifTenaciousInstalled(){
-		File configFile = getTenaciousStartupBatchFile();
-		if(configFile.exists()){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
 	void install(){
 		generateLocalBatchFile();
 		generateStartupBatchFile();
@@ -65,8 +54,8 @@ public class Tenacious {
 		try {
 			writer = new FileWriter(tenaciousBatchFile);
 			writer.write(startSupWorkspaceBatchCode());
-			writer.write("\n");
-			writer.write(generateTenaciousStartBatchCode());
+//			writer.write("\n");
+//			writer.write(generateTenaciousStartBatchCode());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally{
@@ -116,7 +105,7 @@ public class Tenacious {
 			File.pathSeparator+StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"lib\\*");
 		String mainClass = "com.sybase.supqa.tenacious.Tenacious";
 		String log = StringUtil.quote(tenaciousConfig.getTenaciousRootPath()+File.separator+"tenacious.log");
-		return javaPath+ " "+ classPath + " "+mainClass+" >> "+log;
+		return javaPath+ " "+ classPath + " "+mainClass;
 	}
 
 	public static String getJavaPath() {

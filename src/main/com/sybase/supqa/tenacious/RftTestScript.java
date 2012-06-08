@@ -93,22 +93,19 @@ public class RftTestScript {
 		Cmd.executeWithoutWait(buildRftPlaybackCommandString());
 		while(!isTestComplete()){
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		closeIE();
+		Cmd.closeIE();
 		result = new RftTestResult(logFileName);
 		return result;
 	}
 	
 	boolean isTestComplete(){
-		return Cmd.getOutput("tasklist | findstr \"IEXPLORE\"").trim().length()>0;
-	}
-	
-	void closeIE(){
-		Cmd.execute("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
+		String ieProcess = Cmd.getOutput("cmd /c tasklist | findstr \"IEXPLORE\"");
+		return ieProcess.trim().length()>0;
 	}
 
 	String buildRftPlaybackCommandString() {

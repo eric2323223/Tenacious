@@ -73,7 +73,11 @@ public class TestQueueTest {
 		testQueue = new TestQueue("stub");
 		assertEquals(29, testQueue.getMatchTests("testscript.Workflow.Keys.*").size());
 		assertEquals("testscript.Workflow.Keys.Action_ParameterMapping", testQueue.getMatchTests("testscript.Workflow.Keys.*").get(0));
-		
+	}
+	
+	@Test public void shouldGetTodoTest(){
+		testQueue = new TestQueue(config.getTestFixureFolder()+File.separator+"TestQueue2");
+		assertEquals("[Test3]",testQueue.getTodoTests());
 	}
 
 }
