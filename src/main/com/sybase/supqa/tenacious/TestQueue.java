@@ -86,7 +86,7 @@ public class TestQueue {
 				br = new BufferedReader(new FileReader(this.testQueueFile));
 				String test;
 				while((test=br.readLine())!=null){
-					if(test.contains("[") && test.contains("]")){
+					if(test.startsWith("[")){
 						loadMatchTests(test);
 					}else{
 						if(!test.trim().equals("")){
@@ -108,7 +108,7 @@ public class TestQueue {
 	}
 
 	private void loadMatchTests(String test) {
-		String newTest = test.replace("[", "").replace("]", "");
+		String newTest = test.substring(test.indexOf("[")+1,test.indexOf("]"));
 		List<String> tests = getMatchTests(newTest);
 		allTests.remove(test);
 		for(String t:tests){

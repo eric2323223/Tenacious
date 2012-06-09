@@ -22,7 +22,6 @@ public class Tenacious {
 		Tenacious tenacious = new Tenacious(config);
 		tenacious.install();
 		TestQueue testQueue = new TestQueue(config.getTenaciousTestQueueFile());
-//		BrokenTests brokenTests = new BrokenTests(config.getTenaciousBrokenTestsFile());
 		PolicyConfig policyConfig = new PolicyConfig(config.getTenaciousPolicyConfigFile());
 		tenacious.runTests(testQueue, PolicyFactory.getPolicy(policyConfig));
 	}

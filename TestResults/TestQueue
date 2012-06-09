@@ -1,19 +1,36 @@
-*testscript.Workflow.Keys.Action_ParameterMapping	exception	java.lang.NullPointerException
-testscript.Workflow.Keys.ActivationKey_1	pass	
-*testscript.Workflow.Keys.ActivationKey_2	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.CredCacheKey_1	pass	
-*testscript.Workflow.Keys.CredCacheKey_2	exception	com.rational.test.ft.WindowActivateFailedException
-testscript.Workflow.Keys.EnhancedKey_HardCodedValue_DT	pass	
-*testscript.Workflow.Keys.OutputKeys	exception	java.lang.NoClassDefFoundError
-*testscript.Workflow.Keys.Parameter_keys_Mapping	exception	java.lang.NullPointerException
-*testscript.Workflow.Keys.PKMapping_ADE_FT	exception	java.lang.NoClassDefFoundError
-*testscript.Workflow.Keys.PKMapping_list_Tooling	exception	java.lang.NullPointerException
-*testscript.Workflow.Keys.PKMapping_ReStartEclipse	exception	java.lang.NoClassDefFoundError
-*testscript.Workflow.Keys.PKMapping_TransRule_Extract_FT	exception	java.lang.NullPointerException
-*testscript.Workflow.Keys.PK_List_Tooling	exception	java.lang.NullPointerException
-testscript.Workflow.Keys.SCP_NewKey_Restart	pass	
-testscript.Workflow.Keys.SISP_ExtractionRule_ADE	pass	
-testscript.Workflow.Keys.SISP_Keys	pass	
-testscript.Workflow.Keys.SISP_ParameterMapping	pass	
-*testscript.Workflow.Keys.SISP_PKMapping	exception	java.lang.NullPointerException
-*testscript.Workflow.Keys.SP_NewKey_Restart	exception	java.lang.NullPointerException
+*testscript.Workflow.Screens.CSFM_CreateScreen	exception	java.lang.NullPointerException
+testscript.Workflow.Screens.CSFM_DeleteScreen	fail	[[screen], [menuItem2], [menuItem3]]
+testscript.Workflow.Screens.CSFM_UpdateScreen	fail	[[menuItem2], [menuItem3]]
+*testscript.Workflow.Screens.CSFO_CreateScreen	exception	java.lang.NullPointerException
+*testscript.Workflow.Screens.CSFO_DeleteScreen	exception	java.lang.NullPointerException
+testscript.Workflow.Screens.CSFO_Many2One_Child	fail	[[creen], [creen], [creen]]
+testscript.Workflow.Screens.CSFO_Many2One_Parent	fail	[[creen], [creen], [creen]]
+testscript.Workflow.Screens.CSFO_One2Many_Cascade_Child	fail	[[creen]]
+testscript.Workflow.Screens.CSFO_One2Many_Cascade_Parent	fail	[[creen], [creen], [creen], [creen], [creen]]
+testscript.Workflow.Screens.CSFO_One2Many_Not_Cascade_Child	fail	[[creen]]
+testscript.Workflow.Screens.CSFO_One2Many_Not_Cascade_Parent	fail	[[creen]]
+*testscript.Workflow.Screens.CSFO_One2One_Cascade_Bi_dir_Child	exception	com.rational.test.ft.SubitemNotFoundException
+*testscript.Workflow.Screens.CSFO_One2One_Cascade_Bi_dir_Parent	exception	java.lang.NullPointerException
+*testscript.Workflow.Screens.CSFO_One2One_Cascade_N_bi_dir_Child	exception	com.rational.test.ft.SubitemNotFoundException
+*testscript.Workflow.Screens.CSFO_One2One_Cascade_N_bi_dir_Parent	exception	com.rational.test.ft.SubitemNotFoundException
+testscript.Workflow.Screens.CSFO_One2One_Not_Cascade_BiDir_Child	fail	[[creen]]
+testscript.Workflow.Screens.CSFO_One2One_Not_Cascade_BiDir_Parent	fail	[[creen]]
+testscript.Workflow.Screens.CSFO_One2One_Not_Cascade_Child	fail	[[creen]]
+testscript.Workflow.Screens.CSFO_One2One_Not_Cascade_Parent	fail	[[creen]]
+*testscript.Workflow.Screens.CSFO_One2One_N_Cascade_Bi_dir_Child	exception	com.rational.test.ft.SubitemNotFoundException
+*testscript.Workflow.Screens.CSFO_One2One_N_Cascade_Bi_dir_Parent	exception	com.rational.test.ft.SubitemNotFoundException
+testscript.Workflow.Screens.CSFO_One2One_N_Cascade_Nbidir_Parent	fail	[[creen]]
+testscript.Workflow.Screens.CSFO_One2One_N_Cascade_N_bdir_Child	fail	[[creen], [creen], [creen]]
+*testscript.Workflow.Screens.CSFO_One2One_N_Cascade_N_bidir_Child	exception	com.rational.test.ft.SubitemNotFoundException
+*testscript.Workflow.Screens.CSFO_One2One_N_Cascade_N_bidir_Parent	exception	com.rational.test.ft.SubitemNotFoundException
+testscript.Workflow.Screens.CSFO_ReCreate_From_ParentChild	fail	[[screen], [screen], [screen], [screen], [screen], [screen]]
+testscript.Workflow.Screens.CSFO_Screens_Detail	pass	
+*testscript.Workflow.Screens.CSFO_UpdateScreen	exception	java.lang.NullPointerException
+*testscript.Workflow.Screens.CS_AllDataType	exception	java.lang.NoClassDefFoundError
+testscript.Workflow.Screens.CS_EmailSub_MO	fail	[[creen], [creen], [creen], [link], [link]]
+testscript.Workflow.Screens.CS_EmailSub_One2Many_Cascade_Parent_MO	fail	[[screen], [screen], [screen], [screen], [screen], [link]]
+testscript.Workflow.Screens.CS_EmailSub_One2Many_Cascade_Parent_SO	exception	java.lang.NullPointerException
+testscript.Workflow.Screens.CS_EmailSub_One2One_Cascade_Parent_MO
+testscript.Workflow.Screens.CS_EmailSub_One2One_Cascade_Parent_SO
+testscript.Workflow.Screens.CS_EmailSub_SO
+testscript.Workflow.Screens.IDG_FT

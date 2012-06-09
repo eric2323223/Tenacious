@@ -129,7 +129,20 @@ public class Cmd {
 	}
 	
 	public static void closeIE() {
-		Cmd.execute("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
+		int retryCount = 0;
+		while(retryCount < 3){
+			String message = getOutput("cmd /c taskkill /F /IM iexplore.exe /T");
+//			String message = getOutput("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
+			retryCount++;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if (message.trim().length()>0){
+				return ;
+			}
+		}
 	}
 	
 }
