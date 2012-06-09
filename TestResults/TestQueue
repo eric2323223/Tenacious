@@ -1,3 +1,19 @@
 *testscript.Workflow.Keys.Action_ParameterMapping	exception	java.lang.NullPointerException
-*testscript.Workflow.Keys.ActivationKey_1	pass	
+testscript.Workflow.Keys.ActivationKey_1	pass	
 *testscript.Workflow.Keys.ActivationKey_2	exception	com.rational.test.ft.WindowActivateFailedException
+testscript.Workflow.Keys.CredCacheKey_1	pass	
+*testscript.Workflow.Keys.CredCacheKey_2	exception	com.rational.test.ft.WindowActivateFailedException
+testscript.Workflow.Keys.EnhancedKey_HardCodedValue_DT	pass	
+*testscript.Workflow.Keys.OutputKeys	exception	java.lang.NoClassDefFoundError
+*testscript.Workflow.Keys.Parameter_keys_Mapping	exception	java.lang.NullPointerException
+*testscript.Workflow.Keys.PKMapping_ADE_FT	exception	java.lang.NoClassDefFoundError
+*testscript.Workflow.Keys.PKMapping_list_Tooling	exception	java.lang.NullPointerException
+*testscript.Workflow.Keys.PKMapping_ReStartEclipse	exception	java.lang.NoClassDefFoundError
+*testscript.Workflow.Keys.PKMapping_TransRule_Extract_FT	exception	java.lang.NullPointerException
+*testscript.Workflow.Keys.PK_List_Tooling	exception	java.lang.NullPointerException
+testscript.Workflow.Keys.SCP_NewKey_Restart	pass	
+testscript.Workflow.Keys.SISP_ExtractionRule_ADE	pass	
+testscript.Workflow.Keys.SISP_Keys	pass	
+testscript.Workflow.Keys.SISP_ParameterMapping	pass	
+*testscript.Workflow.Keys.SISP_PKMapping	exception	java.lang.NullPointerException
+*testscript.Workflow.Keys.SP_NewKey_Restart	exception	java.lang.NullPointerException
