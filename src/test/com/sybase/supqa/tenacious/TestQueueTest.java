@@ -77,7 +77,12 @@ public class TestQueueTest {
 	
 	@Test public void shouldGetTodoTest(){
 		testQueue = new TestQueue(config.getTestFixureFolder()+File.separator+"TestQueue2");
-		assertEquals("[Test3]",testQueue.getTodoTests());
+		assertEquals(2, testQueue.getTodoTests().size());
+	}
+	
+	@Test public void shouldGetNextTodoTest(){
+		testQueue = new TestQueue(config.getTestFixureFolder()+File.separator+"TestQueue2");
+		assertEquals("Test5", testQueue.getNextTodoTest());
 	}
 
 }

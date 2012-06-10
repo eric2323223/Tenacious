@@ -14,6 +14,11 @@ import java.util.List;
 public class TestQueue {
 	private File testQueueFile;
 	private List<String> allTests = new ArrayList<String>();
+	public static final String DELIMITER = "\t";
+	
+	enum TYPE{
+		NOT_RUN, BROKEN, HOPELESS
+	}
 	
 	public TestQueue(String fileName){
 		this.testQueueFile = new File(fileName);
@@ -25,8 +30,8 @@ public class TestQueue {
 		List<String> todoTests = new ArrayList<String>();
 		for(String test:allTests){
 			if(isTodoTest(test)){
-				if(test.split("\t").length>1){
-					todoTests.add(test.split("\t")[0]);
+				if(test.split(DELIMITER).length>1){
+					todoTests.add(test.split(DELIMITER)[0]);
 				}else{
 					todoTests.add(test);
 				}
@@ -52,7 +57,7 @@ public class TestQueue {
 				allTests.set(i, "*"+script.toString());
 				break;
 			}
-			if(allTests.get(i).split("\t")[0].equals(script.getName())){
+			if(allTests.get(i).split(DELIMITER)[0].equals(script.getName())){
 				allTests.set(i, script.toString());
 				break;
 			}
@@ -185,10 +190,10 @@ public class TestQueue {
 		if(test.startsWith("*")){
 			return false;
 		}
-		if(test.split("\t").length>1 && test.split("\t")[1].equals("pass")){
+		if(test.split(DELIMITER).length>1 && test.split(DELIMITER)[1].equals("pass")){
 			return false;
 		}
-		if(test.split("\t").length==3 && test.split("\t")[1].equals("fail")){
+		if(test.split(DELIMITER).length==3 && test.split(DELIMITER)[1].equals("fail")){
 			return false;
 		}
 		return true;
@@ -202,6 +207,59 @@ public class TestQueue {
 	public List<String> getAllTests() {
 		loadTests();
 		return this.allTests;
+	}
+
+	public String getNextTodoTest() {
+		loadTests();
+		if(getNotYetRunTests().size()>0){
+			return getNotYetRunTests().get(0);
+		}else if(getBrokenTests().size()>0){
+			return getBrokenTests().get(0);
+		}else{
+			return null;
+		}
+	}
+	
+	List<String> getNotYetRunTests(){
+		List<String> tests = new ArrayList<String> ();
+		for(String test:allTests){
+			if(isNotYetRunTest(test)){
+				tests.add(test);
+			}
+		}
+		return tests;
+	}
+	
+	public boolean isNotYetRunTest(String test){
+		return getType(test)==TYPE.NOT_RUN?true:false;
+	}
+	
+	List<String> getBrokenTests(){
+		List<String> tests = new ArrayList<String> ();
+		for(String test:allTests){
+			if(isBrokenTest(test)){
+				tests.add(test);
+			}
+		}
+		return tests;
+	}
+	
+	public boolean isBrokenTest(String test){
+		return getType(test) == TYPE.BROKEN? true: false;
+	}
+	
+	public TYPE getType(String test){
+		if(test.startsWith("*")){
+			return TYPE.HOPELESS;
+		}
+		else if(test.split(DELIMITER).length<=1){
+			return TYPE.NOT_RUN;
+		}
+		else if(test.split(DELIMITER)[1].equals("fail")){
+			return TYPE.HOPELESS;
+		}else{
+			return TYPE.BROKEN;
+		}
 	}
 	
 }
