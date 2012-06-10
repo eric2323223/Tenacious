@@ -104,9 +104,10 @@ public class RftTestScript {
 	}
 	
 	boolean isTestComplete(){
-		String ieProcess1 = Cmd.getOutput("cmd /c tasklist | findstr \"IEXPLORE\"").trim();
-		String ieProcess2 = Cmd.getOutput("cmd /c tasklist | findstr \"iexplore\"").trim();
-		return ieProcess1.length()>0 || ieProcess2.length()>0;
+		TenaciousConfig config = new TenaciousConfig();
+		String ieProcess1 = Cmd.getOutput("cmd /c tasklist | findstr \""+config.getRftTestLogProcessName()+"\"").trim();
+//		String ieProcess2 = Cmd.getOutput("cmd /c tasklist | findstr \"iexplore\"").trim();
+		return ieProcess1.length()>0;
 	}
 
 	String buildRftPlaybackCommandString() {

@@ -12,6 +12,8 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.sybase.supqa.tenacious.TenaciousConfig;
+
 public class Cmd {
 	private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
@@ -129,9 +131,10 @@ public class Cmd {
 	}
 	
 	public static void closeIE() {
+		TenaciousConfig config = new TenaciousConfig();
 		int retryCount = 0;
 		while(retryCount < 3){
-			String message = getOutput("cmd /c taskkill /F /IM iexplore.exe /T");
+			String message = getOutput("cmd /c taskkill /F /IM "+config.getRftTestLogProcessName()+" /T");
 //			String message = getOutput("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
 			retryCount++;
 			try {

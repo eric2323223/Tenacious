@@ -90,6 +90,10 @@ public class TenaciousConfig {
 	public String getIbmSharedLibPath() {
 		return helper.getProperty("IBM_SHARED_LIB");
 	}
+	
+	public String getRftTestLogProcessName(){
+		return helper.getProperty("RFT_TEST_LOG_PROCESS");
+	}
 
 
 }
