@@ -214,7 +214,7 @@ public class TestQueue {
 		if(getNotYetRunTests().size()>0){
 			return getNotYetRunTests().get(0);
 		}else if(getBrokenTests().size()>0){
-			return getBrokenTests().get(0);
+			return getBrokenTests().get(0).split(DELIMITER)[0];
 		}else{
 			return null;
 		}
@@ -255,7 +255,7 @@ public class TestQueue {
 		else if(test.split(DELIMITER).length<=1){
 			return TYPE.NOT_RUN;
 		}
-		else if(test.split(DELIMITER)[1].equals("fail")){
+		else if(test.split(DELIMITER)[1].equals("fail") || test.split(DELIMITER)[1].equals("pass")){
 			return TYPE.HOPELESS;
 		}else{
 			return TYPE.BROKEN;
