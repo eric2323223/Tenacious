@@ -130,12 +130,28 @@ public class Cmd {
 		}
 	}
 	
-	public static void closeIE() {
-		TenaciousConfig config = new TenaciousConfig();
+//	public static void closeIE() {
+//		TenaciousConfig config = new TenaciousConfig();
+//		int retryCount = 0;
+//		while(retryCount < 3){
+//			String message = getOutput("cmd /c taskkill /F /IM "+config.getRftTestLogProcessName()+" /T");
+////			String message = getOutput("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
+//			retryCount++;
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			if (message.trim().length()>0){
+//				return ;
+//			}
+//		}
+//	}
+	
+	public static void killTask(String processName){
 		int retryCount = 0;
 		while(retryCount < 3){
-			String message = getOutput("cmd /c taskkill /F /IM "+config.getRftTestLogProcessName()+" /T");
-//			String message = getOutput("cmd /c taskkill /F /IM IEXPLORE.EXE /T");
+			String message = getOutput("cmd /c taskkill /F /IM "+processName+" /T");
 			retryCount++;
 			try {
 				Thread.sleep(500);
@@ -146,6 +162,7 @@ public class Cmd {
 				return ;
 			}
 		}
+		
 	}
 	
 }

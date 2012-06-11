@@ -29,16 +29,12 @@ public class Tenacious {
 	void runTests(TestQueue queue, IExecutionPolicy policy) {
 		ICleanupHandler handler = CleanupHandlerFactory.getHandler(new PolicyConfig(new TenaciousConfig().getTenaciousPolicyConfigFile()));
 		List<String> tests = queue.getTodoTests();
-		if(tests.size()>0){
-			RftTestSuiteRunner runner = new RftTestSuiteRunner();
-			runner.runTestSuite(policy, queue, handler);
-			List<String> todoTests = queue.getTodoTests();
-			if(tests.size()==todoTests.size()){
-				queue.clear();
-				return;
-			}else{
-				handler.ultimateCleanup();
-			}
+		RftTestSuiteRunner runner = new RftTestSuiteRunner();
+		runner.runTestSuite(policy, queue, handler);
+		if(queue.getNextTodoTest()==null){
+			return;
+		}else{
+			handler.ultimateCleanup();
 		}
 	}
 	

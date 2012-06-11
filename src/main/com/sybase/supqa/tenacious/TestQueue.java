@@ -29,27 +29,36 @@ public class TestQueue {
 		loadTests();
 		List<String> todoTests = new ArrayList<String>();
 		for(String test:allTests){
-			if(isTodoTest(test)){
-				if(test.split(DELIMITER).length>1){
-					todoTests.add(test.split(DELIMITER)[0]);
-				}else{
-					todoTests.add(test);
-				}
+			if(getType(test)==TYPE.NOT_RUN){
+				todoTests.add(getTestName(test));
+			}
+		}
+		for(String test:allTests){
+			if(getType(test)==TYPE.BROKEN){
+				todoTests.add(getTestName(test));
 			}
 		}
 		return todoTests;
 	}
-
-	public List<String> getDoneTests(){
-		loadTests();
-		List<String> doneTests = new ArrayList<String>();
-		for(String test:allTests){
-			if(!isTodoTest(test)){
-				doneTests.add(test);
-			}
+	
+	String getTestName(String test){
+		if(test.split(DELIMITER).length>1){
+			return test.split(DELIMITER)[0];
+		}else{
+			return test;
 		}
-		return doneTests;
 	}
+
+//	public List<String> getDoneTests(){
+//		loadTests();
+//		List<String> doneTests = new ArrayList<String>();
+//		for(String test:allTests){
+//			if(!isTodoTest(test)){
+//				doneTests.add(test);
+//			}
+//		}
+//		return doneTests;
+//	}
 	
 	public void updateTestStatus(RftTestScript script){
 		for(int i=0;i<allTests.size();i++){

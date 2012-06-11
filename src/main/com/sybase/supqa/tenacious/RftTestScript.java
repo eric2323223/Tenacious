@@ -12,6 +12,7 @@ public class RftTestScript {
 	protected final String name;
 	private final String logFileName;
 	protected RftTestResult result;
+	protected TenaciousConfig config = new TenaciousConfig();
 	
 	public String getName() {
 		return name;
@@ -23,7 +24,7 @@ public class RftTestScript {
 
 	public RftTestScript(String name){
 		this.name = name;
-		String root = new TenaciousConfig().getSuptafLogRootPath();
+		String root = config.getSuptafLogRootPath();
 //		String path = name.replace(".", "\\");
 		logFileName = root+File.separator+name+File.separator+"rational_ft_logframe.html";
 	}
@@ -71,7 +72,6 @@ public class RftTestScript {
 	}
 	
 	public RftTestResult run() {
-		TenaciousConfig config = new TenaciousConfig();
 		try {
 			System.out.println("run script "+name);
 			Cmd.executeCommandLine(buildRftPlaybackCommandString(), config.getTimeoutOfTestExecution()*1000);
@@ -98,20 +98,17 @@ public class RftTestScript {
 				e.printStackTrace();
 			}
 		}
-		Cmd.closeIE();
+		Cmd.killTask(config.getRftTestLogProcessName());
 		result = new RftTestResult(logFileName);
 		return result;
 	}
 	
 	boolean isTestComplete(){
-		TenaciousConfig config = new TenaciousConfig();
 		String ieProcess1 = Cmd.getOutput("cmd /c tasklist | findstr \""+config.getRftTestLogProcessName()+"\"").trim();
-//		String ieProcess2 = Cmd.getOutput("cmd /c tasklist | findstr \"iexplore\"").trim();
 		return ieProcess1.length()>0;
 	}
 
 	String buildRftPlaybackCommandString() {
-		TenaciousConfig config = new TenaciousConfig();
 		String rftFtJar = StringUtil.quote(config.getRftFtJar());
 		String suptafRoot = StringUtil.quote(config.getSuptafRootPath());
 		String suptafLib = StringUtil.quote(config.getSuptafRootPath()+"\\lib\\*");

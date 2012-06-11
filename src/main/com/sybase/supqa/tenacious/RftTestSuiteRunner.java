@@ -17,11 +17,12 @@ public class RftTestSuiteRunner {
 	private List<RftTestScript> finishedTests = new ArrayList<RftTestScript>();
 	private List<RftTestScript> allTests = new ArrayList<RftTestScript>();
 	private List<RftTestScript> failedTests = new ArrayList<RftTestScript>();
+	private TenaciousConfig config = new TenaciousConfig();
 	private RftTestResult currentTestResult;
 	private long start = new Date().getTime();
 	
 	public void runTestSuite(final IExecutionPolicy policy, TestQueue queue, final ICleanupHandler handler){
-		Cmd.closeIE();
+		Cmd.killTask(config.getRftTestLogProcessName());
 		while(queue.getTodoTests().size()>0){
 			RftTestScript script = new RftTestScript(queue.getTodoTests().get(0));
 			currentTestResult = script.run3();
