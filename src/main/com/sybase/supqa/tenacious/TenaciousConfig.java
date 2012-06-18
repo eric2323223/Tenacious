@@ -95,5 +95,9 @@ public class TenaciousConfig {
 		return helper.getProperty("RFT_TEST_LOG_PROCESS");
 	}
 
+	public String getSupToolingLaunchBat() {
+		return helper.getProperty("SUP_TOOLING_LAUNCH_BAT");
+	}
+
 
 }

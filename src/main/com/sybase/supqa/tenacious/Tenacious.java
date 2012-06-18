@@ -63,7 +63,7 @@ public class Tenacious {
 	}
 	
 	private String startSupWorkspaceBatchCode() {
-		return "start /B C:\\Sybase\\UnwiredPlatform\\Eclipse\\UnwiredWorkSpace.bat\n" +
+		return "start /B "+tenaciousConfig.getSupToolingLaunchBat()+"\n" +
 				"ping -n 180 127.0.0.1 >null\n" 
 				+generateTenaciousStartBatchCode();
 	}
